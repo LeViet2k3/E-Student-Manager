@@ -1,0 +1,37 @@
+﻿@model List<Department>;
+@{
+    ViewData["Title"] = "Create";
+    var departments = Model ?? [];
+}
+<div>
+    <h1 class="display-4">Create Student Page</h1>
+
+    <form method="POST" action="/Student/Save">
+        <div class="mb-3">
+            <label for="Code" class="form-label">Code</label>
+            <input type="text" class="form-control" required name="Code" id="Code">
+        </div>
+        <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input type="text" class="form-control" required name="Name" id="Name">
+        </div>
+        <div class="mb-3">
+            <label for="Birthday" class="form-label">Birthday</label>
+            <input type="date" class="form-control" required name="Birthday" id="Birthday">
+        </div>
+        <div class="mb-3">
+            <label for="Address" class="form-label">Address</label>
+            <input type="text" class="form-control" required name="Address" id="Address">
+        </div>
+        <div class="mb-3">
+            <label for="DepartmentId" class="form-label">Department</label>
+            <select class="form-select mb-3" required name="DepartmentId" id="DepartmentId">
+                @foreach (var department in departments)
+                {
+                    <option value="@department.Id">@department.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

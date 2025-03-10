@@ -1,0 +1,49 @@
+﻿@model Student;
+@{
+    ViewData["Title"] = "Update";
+    var departments = ViewBag.Departments as List<Department> ?? [];
+    var student = Model;
+}
+<div>
+    <h1 class="display-4">Update Student Page</h1>
+
+    <form method="POST" action="/Student/Save">
+        <div class="mb-3">
+            <label for="Id" class="form-label">Id</label>
+            <input type="text" class="form-control" readonly required name="Id" id="Id" value="@student.Id">
+        </div>
+        <div class="mb-3">
+            <label for="Code" class="form-label">Code</label>
+            <input type="text" class="form-control" required name="Code" id="Code" value="@student.Code">
+        </div>
+        <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input type="text" class="form-control" required name="Name" id="Name" value="@student.Name">
+        </div>
+        <div class="mb-3">
+            <label for="Birthday" class="form-label">Birthday</label>
+            <input type="text" class="form-control" required name="Birthday" id="Birthday" value='@student.Birthday'>
+        </div>
+        <div class="mb-3">
+            <label for="Address" class="form-label">Address</label>
+            <input type="text" class="form-control" required name="Address" id="Address" value="@student.Address">
+        </div>
+        <div class="mb-3">
+            <label for="DepartmentId" class="form-label">Department</label>
+            <select class="form-select mb-3" required name="DepartmentId" id="DepartmentId">
+                @foreach (var department in departments)
+                {
+                    @if (student.DepartmentId == department.Id)
+                    {
+                        <option selected value="@department.Id">@department.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
