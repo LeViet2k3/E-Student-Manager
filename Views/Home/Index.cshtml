@@ -1,8 +1,93 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container text-center">
+    <h2 class="mb-4">Hệ thống quản lý sinh viên</h2>
+
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("Index", "Student")" class="menu-item">
+                <img src="~/images/student_info.png" alt="Thông tin sinh viên">
+                <p>Thông tin sinh viên</p>
+            </a>
+        </div>
+
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("StudyPlan", "Home")" class="menu-item">
+        <img src="~/images/study_plan.png" alt="Kế hoạch học tập">
+        <p>Kế hoạch học tập</p>
+        </a>
+        </div> *@
+
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("RegisterSubject", "Home")" class="menu-item">
+                <img src="~/images/register.png" alt="Đăng ký học phần">
+                <p>Đăng ký học phần</p>
+            </a>
+        </div>
+
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("ExamSchedule", "Home")" class="menu-item">
+        <img src="~/images/exam_schedule.png" alt="Xem lịch thi">
+        <p>Xem lịch thi</p>
+        </a>
+        </div> *@
+
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("StudyResult", "Home")" class="menu-item">
+                <img src="~/images/study_result.png" alt="Kết quả học tập">
+                <p>Kết quả học tập</p>
+            </a>
+        </div>
+
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("EvaluateSubject", "Home")" class="menu-item">
+        <img src="~/images/evaluate.png" alt="Đánh giá học phần">
+        <p>Đánh giá học phần</p>
+        </a>
+        </div> *@
+
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("Tuition", "Home")" class="menu-item">
+        <img src="~/images/tuition.png" alt="Thu học phí">
+        <p>Thu học phí</p>
+        </a>
+        </div> *@
+
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("Timetable", "Home")" class="menu-item">
+                <img src="~/images/timetable.png" alt="Thời khóa biểu">
+                <p>Thời khóa biểu</p>
+            </a>
+        </div>
+    </div>
 </div>
+
+<style>
+    .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f8f9fa;
+    }
+
+    .menu-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .menu-item p {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .menu-item:hover {
+        background-color: #e2e6ea;
+    }
+</style>
