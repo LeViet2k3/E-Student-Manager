@@ -1,0 +1,31 @@
+@model List<StudentApp.Models.Student>
+
+<h2>Nhập điểm cho khóa học</h2>
+
+<form method="post" action="/Teacher/SaveGrades">
+    <input type="hidden" name="CourseId" value="@ViewBag.CourseId" />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã sinh viên</th>
+                <th>Tên sinh viên</th>
+                <th>Điểm số</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.Name</td>
+                    <td>
+                        <input type="number" step="0.1" min="0" max="10" name="Scores[@student.Id]" class="form-control" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Lưu điểm</button>
+</form>

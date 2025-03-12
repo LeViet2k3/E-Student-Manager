@@ -11,11 +11,32 @@ public class StudentController(
     private readonly IStudentService _studentService = studentService;
     private readonly IDepartmentService _departmentService = departmentService;
 
-    public IActionResult Index(string? keySearch, int? departmentId)
+    public IActionResult Index()
     {
+        // 💡 Kiểm tra nếu Session chưa được cấu hình
+        if (HttpContext.Session == null)
+        {
+            throw new InvalidOperationException("Session is not available. Ensure session middleware is enabled.");
+        }
+
+        // Lấy mã số sinh viên từ Session
+        string studentCode = HttpContext.Session.GetString("StudentCode");
+
+        if (string.IsNullOrEmpty(studentCode))
+        {
+            return RedirectToAction("Index", "Login"); // Nếu chưa đăng nhập, chuyển hướng về trang Login
+        }
+
+        var student = _studentService.GetStudentByCode(studentCode);
+
         ViewBag.Departments = _departmentService.GetDepartments();
-        var students = _studentService.GetStudents(keySearch, departmentId);
-        return View(students);
+        return View(student);
+    }
+
+    public IActionResult Courses()
+    {
+        var courses = _studentService.GetCourses(); // Đúng cú pháp
+        return View(courses);
     }
 
     public IActionResult Create()

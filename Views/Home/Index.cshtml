@@ -4,6 +4,13 @@
 
 <div class="container text-center">
     <h2 class="mb-4">Hệ thống quản lý sinh viên</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <span>Xin chào, @User.Identity.Name!</span>
+            <a href="@Url.Action("Logout", "Login")" class="btn btn-danger ms-3">Đăng xuất</a>
+        </div>
+    }
 
     <div class="row">
         <div class="col-md-3 mb-3">
@@ -21,7 +28,7 @@
         </div> *@
 
         <div class="col-md-3 mb-3">
-            <a href="@Url.Action("RegisterSubject", "Home")" class="menu-item">
+            <a href="@Url.Action("Courses", "Student")" class="menu-item">
                 <img src="~/images/register.png" alt="Đăng ký học phần">
                 <p>Đăng ký học phần</p>
             </a>
@@ -35,7 +42,7 @@
         </div> *@
 
         <div class="col-md-3 mb-3">
-            <a href="@Url.Action("StudyResult", "Home")" class="menu-item">
+            <a href="@Url.Action("Index", "Grade")" class="menu-item">
                 <img src="~/images/study_result.png" alt="Kết quả học tập">
                 <p>Kết quả học tập</p>
             </a>

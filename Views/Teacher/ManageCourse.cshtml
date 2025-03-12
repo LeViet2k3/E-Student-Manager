@@ -1,0 +1,29 @@
+@model List<StudentApp.Models.Course>
+
+<h2>Quản lý khóa học</h2>
+
+<a href="/Teacher/CreateCourse" class="btn btn-success">Thêm khóa học</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên khóa học</th>
+            <th>Mô tả</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                    <td>
+                        <a href="/Teacher/EditCourse/@course.CourseId" class="btn btn-warning">Sửa</a>
+                        <a href="/Teacher/DeleteCourse/@course.CourseId" class="btn btn-danger">Xóa</a>
+                        <a href="/Teacher/EnterGrades/@course.CourseId" class="btn btn-primary">Nhập điểm</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

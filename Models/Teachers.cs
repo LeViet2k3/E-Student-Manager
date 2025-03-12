@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace StudentApp.Models;
-public class Student()
+public class Teacher
 {
     [Key]
-    public int Id { get; set; }
+    public int TeacherId { get; set; }
 
     [MaxLength(10)]
     public string Code { get; set; } = string.Empty;
@@ -17,8 +17,6 @@ public class Student()
     [MaxLength(255)]
     public string Address { get; set; } = string.Empty;
 
-    public int DepartmentId { get; set; }
-
-    public virtual Department? Department { get; set; }
-    public ICollection<Grade> Grades { get; set; } = new List<Grade>();
+    // Một giáo viên có thể dạy nhiều khóa học
+    public ICollection<Course> Courses { get; set; }
 }

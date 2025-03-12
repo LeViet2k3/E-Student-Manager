@@ -4,17 +4,23 @@ namespace StudentApp.Models;
 
 public interface IStudentService
 {
+    Student GetStudentByCode(string code);
     List<Student> GetStudents(string? keySearch = null, int? departmentId = null);
     Student? GetStudentById(int id);
     void CreateStudent(Student student);
     void UpdateStudent(Student student);
     void DeleteStudent(int id);
+    List<Course> GetCourses();
 }
 
 public class StudentService(DataContext dataContext) : IStudentService
 {
     private readonly DataContext _dataContext = dataContext;
 
+    public Student GetStudentByCode(string code)
+    {
+        return _dataContext.Students.FirstOrDefault(s => s.Code == code);
+    }
     public void CreateStudent(Student student)
     {
         _dataContext.Students.Add(student);
@@ -54,4 +60,10 @@ public class StudentService(DataContext dataContext) : IStudentService
         updateStudent.DepartmentId = student.DepartmentId;
         _dataContext.SaveChanges();
     }
+
+    public List<Course> GetCourses()
+    {
+        return _dataContext.Courses.ToList();
+    }
+
 }

@@ -1,0 +1,21 @@
+@model List<StudentApp.Models.Grade>
+
+<h2>Danh sách điểm</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Khóa học</th>
+            <th>Điểm số</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var grade in Model)
+        {
+                <tr>
+                    <td>@grade.Course.Name</td>
+                    <td>@grade.Score</td>
+                </tr>
+        }
+    </tbody>
+</table>

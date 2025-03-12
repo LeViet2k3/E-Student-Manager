@@ -9,15 +9,33 @@ public class DataContext : DbContext
     public DbSet<Student> Students { get; set; }
 
     public DbSet<Department> Departments { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<Grade> Grades { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Student>(e => {
+        modelBuilder.Entity<Student>(e =>
+        {
             e.HasKey(s => s.Id);
             e.HasOne(s => s.Department)
                 .WithMany(d => d.Students)
                 .HasForeignKey(s => s.DepartmentId);
         });
+        modelBuilder.Entity<Course>()
+            .HasOne(c => c.Teacher)
+            .WithMany(t => t.Courses)
+            .HasForeignKey(c => c.TeacherId);
+
+        modelBuilder.Entity<Grade>()
+            .HasOne(g => g.Student)
+            .WithMany(s => s.Grades)
+            .HasForeignKey(g => g.StudentId);
+
+        modelBuilder.Entity<Grade>()
+            .HasOne(g => g.Course)
+            .WithMany(c => c.Grades)
+            .HasForeignKey(g => g.CourseId);
     }
 }
