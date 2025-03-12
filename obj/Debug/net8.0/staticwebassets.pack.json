@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\images\\timetable.png"
     },
     {
+      "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\upload.png",
+      "PackagePath": "staticwebassets\\images\\upload.png"
+    },
+    {
       "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

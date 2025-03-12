@@ -74,6 +74,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Tài liệu/Kì 2 năm 4/Khóa luận tốt nghiệp/E-Student-Manager/Views/Student/Timetable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxUaW1ldGFibGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tài liệu/Kì 2 năm 4/Khóa luận tốt nghiệp/E-Student-Manager/Views/Student/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -82,8 +86,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxFbnRlckdyYWRlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Tài liệu/Kì 2 năm 4/Khóa luận tốt nghiệp/E-Student-Manager/Views/Teacher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tài liệu/Kì 2 năm 4/Khóa luận tốt nghiệp/E-Student-Manager/Views/Teacher/ManageCourse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxNYW5hZ2VDb3Vyc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tài liệu/Kì 2 năm 4/Khóa luận tốt nghiệp/E-Student-Manager/Views/Teacher/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tài liệu/Kì 2 năm 4/Khóa luận tốt nghiệp/E-Student-Manager/Views/_ViewImports.cshtml]

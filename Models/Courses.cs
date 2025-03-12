@@ -19,5 +19,6 @@ namespace StudentApp.Models
         public Teacher Teacher { get; set; }
 
         public ICollection<Grade> Grades { get; set; }
+        public ICollection<StudentCourse> StudentCourses { get; set; }
     }
 }

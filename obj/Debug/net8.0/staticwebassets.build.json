@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tDTrTTYYl3PT/OwZjP2vc4qWS/fvGfV/O+Yxt/2oEyg=",
+  "Hash": "XEeGtf8LUenB1BiiZS/aiEzBt6GWP7SGyk9xqpnMxF8=",
   "Source": "StudentApp",
   "BasePath": "_content/StudentApp",
   "Mode": "Default",
@@ -167,6 +167,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\timetable.png"
+    },
+    {
+      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\upload.png",
+      "SourceId": "StudentApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\",
+      "BasePath": "_content/StudentApp",
+      "RelativePath": "images/upload.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\upload.png"
     },
     {
       "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\js\\site.js",

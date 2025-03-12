@@ -1,12 +1,12 @@
 @model List<StudentApp.Models.Course>
 
-<h2>Danh sách khóa học</h2>
+<h2>Thời khóa biểu</h2>
+
 <table class="table">
     <thead>
         <tr>
             <th>Tên khóa học</th>
             <th>Mô tả</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -15,12 +15,6 @@
             <tr>
                 <td>@course.Name</td>
                 <td>@course.Description</td>
-                <td>
-                    <form method="post" action="/Student/RegisterCourse">
-                        <input type="hidden" name="courseId" value="@course.CourseId" />
-                        <button type="submit" class="btn btn-primary">Đăng ký</button>
-                    </form>
-                </td>
             </tr>
         }
     </tbody>

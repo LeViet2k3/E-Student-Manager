@@ -21,4 +21,5 @@ public class Student()
 
     public virtual Department? Department { get; set; }
     public ICollection<Grade> Grades { get; set; } = new List<Grade>();
+    public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
 }

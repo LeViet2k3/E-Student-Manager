@@ -1,30 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
 using StudentApp.Models;
+using StudentApp.Services;
+using System.Threading.Tasks;
 
 namespace StudentApp.Controllers;
 
 public class StudentController(
     IStudentService studentService,
-    IDepartmentService departmentService
+    IDepartmentService departmentService,
+    ICourseService courseService
     ) : Controller
 {
     private readonly IStudentService _studentService = studentService;
     private readonly IDepartmentService _departmentService = departmentService;
+    private readonly ICourseService _courseService = courseService;
 
     public IActionResult Index()
     {
-        // 💡 Kiểm tra nếu Session chưa được cấu hình
         if (HttpContext.Session == null)
         {
             throw new InvalidOperationException("Session is not available. Ensure session middleware is enabled.");
         }
 
-        // Lấy mã số sinh viên từ Session
         string studentCode = HttpContext.Session.GetString("StudentCode");
 
         if (string.IsNullOrEmpty(studentCode))
         {
-            return RedirectToAction("Index", "Login"); // Nếu chưa đăng nhập, chuyển hướng về trang Login
+            return RedirectToAction("Index", "Login");
         }
 
         var student = _studentService.GetStudentByCode(studentCode);
@@ -35,7 +37,7 @@ public class StudentController(
 
     public IActionResult Courses()
     {
-        var courses = _studentService.GetCourses(); // Đúng cú pháp
+        var courses = _courseService.GetCourses();
         return View(courses);
     }
 
@@ -69,5 +71,69 @@ public class StudentController(
             _studentService.UpdateStudent(student);
         }
         return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RegisterCourse(int courseId)
+    {
+        string studentCode = HttpContext.Session.GetString("StudentCode");
+
+        if (string.IsNullOrEmpty(studentCode))
+        {
+            return RedirectToAction("Index", "Login");
+        }
+
+        var student = _studentService.GetStudentByCode(studentCode);
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        bool isRegistered = _courseService.IsStudentRegistered(student.Id, courseId);
+        if (!isRegistered)
+        {
+            _courseService.RegisterStudentToCourse(student.Id, courseId);
+        }
+
+        return RedirectToAction("Timetable");
+    }
+
+    public async Task<IActionResult> Timetable()
+    {
+        string studentCode = HttpContext.Session.GetString("StudentCode");
+
+        if (string.IsNullOrEmpty(studentCode))
+        {
+            return RedirectToAction("Index", "Login");
+        }
+
+        var student = _studentService.GetStudentByCode(studentCode);
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        var registeredCourses = _courseService.GetStudentCourses(student.Id);
+        return View(registeredCourses);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UnregisterCourse(int courseId)
+    {
+        string studentCode = HttpContext.Session.GetString("StudentCode");
+
+        if (string.IsNullOrEmpty(studentCode))
+        {
+            return RedirectToAction("Index", "Login");
+        }
+
+        var student = _studentService.GetStudentByCode(studentCode);
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        _courseService.UnregisterStudentFromCourse(student.Id, courseId);
+        return RedirectToAction("Timetable");
     }
 }

@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ - Teacher";
+}
+
+<div class="container text-center">
+    <h2 class="mb-4">Hệ thống quản lý giảng viên</h2>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <span>Xin chào, @User.Identity.Name!</span>
+            <a href="@Url.Action("Logout", "Login")" class="btn btn-danger ms-3">Đăng xuất</a>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Thông tin giảng viên -->
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("Profile", "Teacher")" class="menu-item">
+                <img src="~/images/student_info.png" alt="Thông tin giảng viên">
+                <p>Thông tin giảng viên</p>
+            </a>
+        </div>
+
+        <!-- Tải lên tài liệu giảng dạy -->
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("UploadMaterials", "Teacher")" class="menu-item">
+                <img src="~/images/upload.png" alt="Tài liệu giảng dạy">
+                <p>Tải lên tài liệu</p>
+            </a>
+        </div>
+
+        <!-- Nhập điểm -->
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("EnterGrades", "Teacher")" class="menu-item">
+                <img src="~/images/study_result.png" alt="Nhập điểm">
+                <p>Nhập điểm</p>
+            </a>
+        </div>
+
+        <!-- Xem lịch giảng -->
+        <div class="col-md-3 mb-3">
+            <a href="@Url.Action("Schedule", "Teacher")" class="menu-item">
+                <img src="~/images/timetable.png" alt="Lịch giảng">
+                <p>Lịch giảng</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f8f9fa;
+    }
+
+    .menu-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .menu-item p {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .menu-item:hover {
+        background-color: #e2e6ea;
+    }
+</style>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using StudentApp.Models;
+using StudentApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 // 🔥 Thêm Session vào dịch vụ
 builder.Services.AddDistributedMemoryCache(); // Sử dụng bộ nhớ RAM để lưu session

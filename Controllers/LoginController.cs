@@ -29,36 +29,59 @@ namespace StudentApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string Code, string Name)
         {
+            // 📌 Kiểm tra xem có phải Student không
             var student = _context.Students.FirstOrDefault(s => s.Code == Code && s.Name == Name);
-
             if (student != null)
             {
-                // 🔹 Tạo danh sách Claims (chứa thông tin người dùng)
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, student.Id.ToString()), // ✅ Lưu ID sinh viên
-                    new Claim(ClaimTypes.Name, student.Name) // ✅ Lưu tên sinh viên
+                    new Claim(ClaimTypes.NameIdentifier, student.Id.ToString() ?? ""), // ✅ Đảm bảo giá trị là string
+                    new Claim(ClaimTypes.Name, student.Name ?? ""), // ✅ Tránh lỗi null
+                    new Claim(ClaimTypes.Role, "Student")
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                // 🔹 Xác thực đăng nhập
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
                 HttpContext.Session.SetString("StudentCode", student.Code);
-                // Lưu mã số sinh viên vào Session
-                return RedirectToAction("Index", "Home"); // 🔹 Chuyển đến trang chính sau khi đăng nhập thành công
+                HttpContext.Session.SetString("UserRole", "Student");
+
+                return RedirectToAction("Index", "Home"); // 🔹 Chuyển đến trang Student
             }
 
-            // ❌ Nếu không tìm thấy sinh viên, hiển thị lỗi
-            ViewBag.Error = "Mã sinh viên hoặc tên không đúng!";
+            // 📌 Kiểm tra xem có phải Teacher không
+            var teacher = _context.Teachers.FirstOrDefault(t => t.Code == Code && t.Name == Name);
+            if (teacher != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, teacher.TeacherId.ToString() ?? ""),
+                    new Claim(ClaimTypes.Name, teacher.Name ?? ""),
+                    new Claim(ClaimTypes.Role, "Teacher")
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                HttpContext.Session.SetString("TeacherCode", teacher.Code);
+                HttpContext.Session.SetString("UserRole", "Teacher");
+
+                return RedirectToAction("Index", "Teacher"); // 🔹 Chuyển đến trang Teacher
+            }
+
+            // ❌ Nếu không tìm thấy
+            ViewBag.Error = "Mã số hoặc tên không đúng!";
             return View("Index");
         }
 
-        // 🔥 Action xử lý đăng xuất
+        // 🔥 Xử lý đăng xuất
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("UserCode");
+            HttpContext.Session.Remove("UserRole");
             return RedirectToAction("Index", "Login");
         }
     }
