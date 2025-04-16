@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XEeGtf8LUenB1BiiZS/aiEzBt6GWP7SGyk9xqpnMxF8=",
+  "Hash": "1lQuf/cio0vryP1CwTNVAtiGIJqAZqokykuRPRHscTY=",
   "Source": "StudentApp",
   "BasePath": "_content/StudentApp",
   "Mode": "Default",
@@ -93,6 +93,25 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\grade_manager.png",
+      "SourceId": "StudentApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\",
+      "BasePath": "_content/StudentApp",
+      "RelativePath": "images/grade_manager.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\grade_manager.png"
+    },
+    {
       "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\register.png",
       "SourceId": "StudentApp",
       "SourceType": "Discovered",
@@ -110,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\register.png"
+    },
+    {
+      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\see_class_list.png",
+      "SourceId": "StudentApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\",
+      "BasePath": "_content/StudentApp",
+      "RelativePath": "images/see_class_list.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\see_class_list.png"
     },
     {
       "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\student_info.png",

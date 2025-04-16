@@ -1,25 +1,20 @@
 using System.ComponentModel.DataAnnotations;
-
+using StudentApp.Models;
 namespace StudentApp.Models;
 public class Student()
 {
     [Key]
-    public int Id { get; set; }
+    public string MaSV { get; set; }
+    public string HoTen { get; set; }
+    public DateTime NgaySinh { get; set; }
+    public string GioiTinh { get; set; }
+    public string Email { get; set; }
+    public string SDT { get; set; }
+    public string DiaChi { get; set; }
+    public string Khoa { get; set; }
+    public string Nganh { get; set; }
 
-    [MaxLength(10)]
-    public string Code { get; set; } = string.Empty;
-
-    [MaxLength(50)]
-    public string Name { get; set; } = string.Empty;
-
-    public DateOnly Birthday { get; set; } = DateOnly.MinValue;
-
-    [MaxLength(255)]
-    public string Address { get; set; } = string.Empty;
-
-    public int DepartmentId { get; set; }
-
-    public virtual Department? Department { get; set; }
-    public ICollection<Grade> Grades { get; set; } = new List<Grade>();
-    public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
+    public ICollection<CourseRegistration> CourseRegistrations { get; set; }
+    public ICollection<Grade> Grades { get; set; }
+    public ICollection<Schedule> Schedules { get; set; }
 }

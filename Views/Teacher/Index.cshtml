@@ -1,10 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Trang chủ - Teacher";
+    ViewData["Title"] = "Trang chủ";
 }
 
 <div class="container text-center">
     <h2 class="mb-4">Hệ thống quản lý giảng viên</h2>
-
     @if (User.Identity.IsAuthenticated)
     {
         <div>
@@ -14,35 +13,59 @@
     }
 
     <div class="row">
-        <!-- Thông tin giảng viên -->
         <div class="col-md-3 mb-3">
-            <a href="@Url.Action("Profile", "Teacher")" class="menu-item">
-                <img src="~/images/student_info.png" alt="Thông tin giảng viên">
+            <a href="@Url.Action("profile", "Student")" class="menu-item">
+                <img src="~/images/student_info.png" alt="Thông tin sinh viên">
                 <p>Thông tin giảng viên</p>
             </a>
         </div>
 
-        <!-- Tải lên tài liệu giảng dạy -->
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("StudyPlan", "Home")" class="menu-item">
+        <img src="~/images/study_plan.png" alt="Kế hoạch học tập">
+        <p>Kế hoạch học tập</p>
+        </a>
+        </div> *@
+
         <div class="col-md-3 mb-3">
-            <a href="@Url.Action("UploadMaterials", "Teacher")" class="menu-item">
-                <img src="~/images/upload.png" alt="Tài liệu giảng dạy">
-                <p>Tải lên tài liệu</p>
+            <a href="@Url.Action("Index", "Course")" class="menu-item">
+                <img src="~/images/grade_manager.png" alt="Đăng ký học phần">
+                <p>Quản lý điểm</p>
             </a>
         </div>
 
-        <!-- Nhập điểm -->
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("ExamSchedule", "Home")" class="menu-item">
+        <img src="~/images/exam_schedule.png" alt="Xem lịch thi">
+        <p>Xem lịch thi</p>
+        </a>
+        </div> *@
+
         <div class="col-md-3 mb-3">
-            <a href="@Url.Action("EnterGrades", "Teacher")" class="menu-item">
-                <img src="~/images/study_result.png" alt="Nhập điểm">
-                <p>Nhập điểm</p>
+            <a href="@Url.Action("Index", "Grade")" class="menu-item">
+                <img src="~/images/see_class_list.png" alt="Kết quả học tập">
+                <p>Xem danh sách lớp học</p>
             </a>
         </div>
 
-        <!-- Xem lịch giảng -->
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("EvaluateSubject", "Home")" class="menu-item">
+        <img src="~/images/evaluate.png" alt="Đánh giá học phần">
+        <p>Đánh giá học phần</p>
+        </a>
+        </div> *@
+
+        @* <div class="col-md-3 mb-3">
+        <a href="@Url.Action("Tuition", "Home")" class="menu-item">
+        <img src="~/images/tuition.png" alt="Thu học phí">
+        <p>Thu học phí</p>
+        </a>
+        </div> *@
+
         <div class="col-md-3 mb-3">
-            <a href="@Url.Action("Schedule", "Teacher")" class="menu-item">
-                <img src="~/images/timetable.png" alt="Lịch giảng">
-                <p>Lịch giảng</p>
+            <a href="@Url.Action("Timetable", "Student")" class="menu-item">
+                <img src="~/images/timetable.png" alt="Thời khóa biểu">
+                <p>Xem lịch dạy</p>
             </a>
         </div>
     </div>

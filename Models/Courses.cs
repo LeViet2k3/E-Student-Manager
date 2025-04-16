@@ -7,18 +7,16 @@ namespace StudentApp.Models
     public class Course
     {
         [Key]
-        public int CourseId { get; set; }
+        public string MaHP { get; set; }
+        public string TenHP { get; set; }
+        public int SoTinChi { get; set; }
+        public int KiHoc { get; set; }
+        public string NamHoc { get; set; }
+        public string Khoa { get; set; }
+        public string Nganh { get; set; }
 
-        [Required]
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        [ForeignKey("Teacher")]
-        public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
-
-        public ICollection<Grade> Grades { get; set; }
-        public ICollection<StudentCourse> StudentCourses { get; set; }
+        public ICollection<CourseClass> CourseClasses { get; set; }
+        public ICollection<StudyPlan> StudyPlans { get; set; }
+        public ICollection<TrainingProgram> TrainingPrograms { get; set; }
     }
 }

@@ -1,12 +1,7 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using StudentApp.Models;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace StudentApp.Controllers
 {
@@ -19,70 +14,53 @@ namespace StudentApp.Controllers
             _context = context;
         }
 
-        // ✅ Hiển thị trang đăng nhập
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        // ✅ Xử lý đăng nhập
+        // ✅ Đăng nhập bằng mã + email
         [HttpPost]
-        public async Task<IActionResult> Login(string Code, string Name)
+        public IActionResult Login(string code, string email, string role)
         {
-            // 📌 Kiểm tra xem có phải Student không
-            var student = _context.Students.FirstOrDefault(s => s.Code == Code && s.Name == Name);
-            if (student != null)
+            if (role == "Student")
             {
-                var claims = new List<Claim>
+                var student = _context.Students
+                    .FirstOrDefault(s => s.MaSV == code && s.Email == email);
+
+                if (student != null)
                 {
-                    new Claim(ClaimTypes.NameIdentifier, student.Id.ToString() ?? ""), // ✅ Đảm bảo giá trị là string
-                    new Claim(ClaimTypes.Name, student.Name ?? ""), // ✅ Tránh lỗi null
-                    new Claim(ClaimTypes.Role, "Student")
-                };
+                    HttpContext.Session.SetString("UserId", student.MaSV);
+                    HttpContext.Session.SetString("UserName", student.HoTen);
+                    HttpContext.Session.SetString("UserRole", "Student");
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    return RedirectToAction("Index", "Student");
+                }
+            }
+            else if (role == "Teacher")
+            {
+                var teacher = _context.Teachers
+                    .FirstOrDefault(t => t.MaGV == code && t.Email == email);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
-                HttpContext.Session.SetString("StudentCode", student.Code);
-                HttpContext.Session.SetString("UserRole", "Student");
+                if (teacher != null)
+                {
+                    HttpContext.Session.SetString("UserId", teacher.MaGV);
+                    HttpContext.Session.SetString("UserName", teacher.HoTen);
+                    HttpContext.Session.SetString("UserRole", "Teacher");
 
-                return RedirectToAction("Index", "Home"); // 🔹 Chuyển đến trang Student
+                    return RedirectToAction("Index", "Teacher");
+                }
             }
 
-            // 📌 Kiểm tra xem có phải Teacher không
-            var teacher = _context.Teachers.FirstOrDefault(t => t.Code == Code && t.Name == Name);
-            if (teacher != null)
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, teacher.TeacherId.ToString() ?? ""),
-                    new Claim(ClaimTypes.Name, teacher.Name ?? ""),
-                    new Claim(ClaimTypes.Role, "Teacher")
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
-                HttpContext.Session.SetString("TeacherCode", teacher.Code);
-                HttpContext.Session.SetString("UserRole", "Teacher");
-
-                return RedirectToAction("Index", "Teacher"); // 🔹 Chuyển đến trang Teacher
-            }
-
-            // ❌ Nếu không tìm thấy
-            ViewBag.Error = "Mã số hoặc tên không đúng!";
+            ViewBag.Error = "Sai mã hoặc email!";
             return View("Index");
         }
 
-        // 🔥 Xử lý đăng xuất
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Remove("UserCode");
-            HttpContext.Session.Remove("UserRole");
-            return RedirectToAction("Index", "Login");
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }

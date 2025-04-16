@@ -1,23 +1,23 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentApp.Models
 {
-    public class Grade
+    public class CourseRegistration
     {
-        [Key]
-        public string MaDiem { get; set; }
-
+        [Key, Column(Order = 0)]
         public string MaSV { get; set; }
+
+        [Key, Column(Order = 1)]
+        public string MaLHP { get; set; }
+
         [ForeignKey("MaSV")]
         public Student Students { get; set; }
 
-        public string MaLHP { get; set; }
         [ForeignKey("MaLHP")]
         public CourseClass CourseClasses { get; set; }
 
-        public double DiemQT { get; set; }
-        public double DiemThi { get; set; }
-        public double DiemTong { get; set; }
+        public DateTime NgayDK { get; set; }
     }
 }

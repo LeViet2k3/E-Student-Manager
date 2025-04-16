@@ -1,63 +1,78 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StudentApp.Models;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore; 
 
-[Route("api/courses")]
-[ApiController]
-public class CourseController : ControllerBase
+namespace StudentApp.Controllers
 {
-    private readonly DataContext _context;
-
-    public CourseController(DataContext context)
+    public class CourseController : Controller
     {
-        _context = context;
-    }
+        private readonly ICourseService _courseService;
+        private readonly DataContext _context;
 
-    // ✅ Sinh viên xem danh sách khóa học
-    [HttpGet]
-    public async Task<IActionResult> GetCourses()
-    {
-        var courses = await _context.Courses.Include(c => c.Teacher).ToListAsync();
-        return Ok(courses);
-    }
+        public CourseController(ICourseService courseService, DataContext context)
+        {
+            _courseService = courseService;
+            _context = context;
+        }
 
-    // ✅ Giáo viên thêm khóa học
-    [HttpPost]
-    public async Task<IActionResult> AddCourse([FromBody] Course course)
-    {
-        if (course == null) return BadRequest();
+        public IActionResult Index()
+        {
+            string maSV = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(maSV))
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để xem danh sách học phần.";
+                return RedirectToAction("Index", "Student");
+            }
 
-        _context.Courses.Add(course);
-        await _context.SaveChangesAsync();
-        return Ok(course);
-    }
+            var courses = _courseService.GetCourses();
+            
+            var registeredCourseIds = _context.CourseRegistrations
+                .Include(r => r.CourseClasses)
+                .ThenInclude(cc => cc.Course)
+                .Where(r => r.MaSV == maSV)
+                .Select(r => r.CourseClasses.Course.MaHP)
+                .Distinct()
+                .ToList();
 
-    // ✅ Giáo viên chỉnh sửa khóa học
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCourse(int id, [FromBody] Course course)
-    {
-        var existingCourse = await _context.Courses.FindAsync(id);
-        if (existingCourse == null) return NotFound();
+            ViewBag.RegisteredCourseIds = registeredCourseIds;
+            ViewBag.MaSV = maSV;  // Truyền maSV vào View nếu cần
 
-        existingCourse.Name = course.Name;
-        existingCourse.Description = course.Description;
-        existingCourse.TeacherId = course.TeacherId;
+            return View(courses);
+        }
 
-        await _context.SaveChangesAsync();
-        return Ok(existingCourse);
-    }
 
-    // ✅ Giáo viên xóa khóa học
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCourse(int id)
-    {
-        var course = await _context.Courses.FindAsync(id);
-        if (course == null) return NotFound();
 
-        _context.Courses.Remove(course);
-        await _context.SaveChangesAsync();
-        return Ok();
+
+        [HttpPost]
+        public IActionResult Register(string maSV, string maHP)
+        {
+            if (string.IsNullOrEmpty(maSV) || string.IsNullOrEmpty(maHP))
+                return BadRequest();
+
+            bool success = _courseService.RegisterStudentToCourse(maSV, maHP);
+
+            if (success)
+                TempData["Message"] = "Đăng ký học phần thành công!";
+            else
+                TempData["Error"] = "Đã đăng ký học phần này rồi hoặc xảy ra lỗi.";
+
+            return RedirectToAction("Index", new { maSV });
+        }
+
+        [HttpPost]
+        public IActionResult Unregister(string maSV, string maHP)
+        {
+            if (string.IsNullOrEmpty(maSV) || string.IsNullOrEmpty(maHP))
+                return BadRequest();
+
+            bool success = _courseService.UnregisterStudentFromCourse(maSV, maHP);
+
+            if (success)
+                TempData["Message"] = "Hủy đăng ký thành công!";
+            else
+                TempData["Error"] = "Không thể hủy đăng ký.";
+
+            return RedirectToAction("Index", new { maSV });
+        }
     }
 }

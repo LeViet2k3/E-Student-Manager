@@ -13,8 +13,16 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\grade_manager.png",
+      "PackagePath": "staticwebassets\\images\\grade_manager.png"
+    },
+    {
       "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\register.png",
       "PackagePath": "staticwebassets\\images\\register.png"
+    },
+    {
+      "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\see_class_list.png",
+      "PackagePath": "staticwebassets\\images\\see_class_list.png"
     },
     {
       "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\student_info.png",

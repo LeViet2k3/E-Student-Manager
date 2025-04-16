@@ -3,34 +3,49 @@ using Microsoft.EntityFrameworkCore;
 using StudentApp.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;  // ✅ Thêm thư viện để lấy thông tin đăng nhập
 
-public class GradeController : Controller
+namespace StudentApp.Controllers
 {
-    private readonly DataContext _context;
-
-    public GradeController(DataContext context)
+    public class GradeController : Controller
     {
-        _context = context;
-    }
+       private readonly DataContext _context;
 
-    // ✅ Hiển thị điểm của sinh viên đăng nhập
-    public async Task<IActionResult> Index()
-    {
-        // 🔹 Lấy ID của sinh viên từ User đang đăng nhập
-        var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (string.IsNullOrEmpty(studentId))
+        public GradeController(DataContext context)
         {
-            return RedirectToAction("Login", "Account");  // 🔹 Nếu chưa đăng nhập, chuyển hướng đến trang Login
+            _context = context;
         }
 
-        // 🔹 Lọc điểm theo sinh viên hiện tại
-        var grades = await _context.Grades
-            .Include(g => g.Course)
-            .Where(g => g.StudentId == int.Parse(studentId))  // Chỉ lấy điểm của sinh viên đang đăng nhập
+        public async Task<IActionResult> Index(int? hocKy, string namHoc)
+        {
+            // Tạm thời hard-code mã sinh viên
+            var maSV = HttpContext.Session.GetString("UserId");
+
+            var namHocList = await _context.Courses
+            .Select(c => c.NamHoc)
+            .Distinct()
+            .OrderByDescending(n => n)
             .ToListAsync();
 
-        return View(grades);
+            ViewBag.NamHocList = namHocList;
+            // Join bảng Grade → CourseClass → Course
+            var query = _context.Grades
+                .Include(g => g.CourseClasses)
+                    .ThenInclude(cc => cc.Course)
+                .Include(g => g.Students)
+                .Where(g => g.MaSV == maSV);
+
+            if (hocKy.HasValue)
+            {
+                query = query.Where(g => g.CourseClasses.Course.KiHoc == hocKy);
+            }
+
+            if (!string.IsNullOrEmpty(namHoc))
+            {
+                query = query.Where(g => g.CourseClasses.Course.NamHoc == namHoc);
+            }
+
+            var result = await query.ToListAsync();
+            return View(result);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentApp.Models;
 
@@ -11,9 +12,11 @@ using StudentApp.Models;
 namespace StudentApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250414035849_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +37,8 @@ namespace StudentApp.Migrations
                     b.Property<int>("KiHoc")
                         .HasColumnType("int");
 
-                    b.Property<string>("NamHoc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NamHoc")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nganh")
                         .IsRequired()
@@ -93,20 +95,25 @@ namespace StudentApp.Migrations
 
             modelBuilder.Entity("StudentApp.Models.CourseRegistration", b =>
                 {
-                    b.Property<string>("MaSV")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(0);
+                    b.Property<string>("MaDK")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaLHP")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(1);
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MaSV")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("NgayDK")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MaSV", "MaLHP");
+                    b.HasKey("MaDK");
 
                     b.HasIndex("MaLHP");
+
+                    b.HasIndex("MaSV");
 
                     b.ToTable("CourseRegistrations");
                 });
@@ -319,13 +326,13 @@ namespace StudentApp.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("StudentApp.Models.Course", "Course")
+                    b.HasOne("StudentApp.Models.Course", "Courses")
                         .WithMany("CourseClasses")
                         .HasForeignKey("MaHP")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Course");
+                    b.Navigation("Courses");
 
                     b.Navigation("Teachers");
                 });

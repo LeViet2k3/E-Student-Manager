@@ -1,0 +1,59 @@
+﻿@model List<StudentApp.Models.Course>
+@{
+    ViewData["Title"] = "Danh sách học phần";
+    var maSV = ViewBag.MaSV as string;
+    var registeredCourseIds = ViewBag.RegisteredCourseIds as List<string>;
+}
+
+<h2>Danh sách học phần</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã học phần</th>
+            <th>Tên học phần</th>
+            <th>Số tín chỉ</th>
+            <th>Kỳ học</th>
+            <th>Năm học</th>
+            <th>Khoa</th>
+            <th>Ngành</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hp in Model)
+        {
+            // Kiểm tra xem học phần đã được sinh viên đăng ký hay chưa
+            var isRegistered = registeredCourseIds.Contains(hp.MaHP);
+            
+            <tr>
+                <td>@hp.MaHP</td>
+                <td>@hp.TenHP</td>
+                <td>@hp.SoTinChi</td>
+                <td>@hp.KiHoc</td>
+                <td>@hp.NamHoc</td>
+                <td>@hp.Khoa</td>
+                <td>@hp.Nganh</td>
+                <td>
+                    @if (isRegistered)
+                    {
+                        <span class="text-success">Đã đăng ký</span>
+                    }
+                    else
+                    {
+                        <form asp-action="Register" asp-controller="Course" method="post">
+                            <input type="hidden" name="maHP" value="@hp.MaHP" />
+                            <input type="hidden" name="maSV" value="@maSV" />
+                            <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

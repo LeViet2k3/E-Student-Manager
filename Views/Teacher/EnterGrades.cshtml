@@ -1,9 +1,10 @@
-@model List<StudentApp.Models.Student>
+@* @model List<StudentApp.Models.Student>
 
 <h2>Nhập điểm cho khóa học</h2>
 
 <form method="post" action="/Teacher/SaveGrades">
-    <input type="hidden" name="CourseId" value="@ViewBag.CourseId" />
+    <input type="hidden" name="CourseId" value="@ViewBag.CourseId ?? 0" />
+
 
     <table class="table">
         <thead>
@@ -14,13 +15,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var student in Model)
+            @for (int i = 0; i < Model.Count; i++)
             {
                 <tr>
-                    <td>@student.Id</td>
-                    <td>@student.Name</td>
+                    <td>@Model[i].Id</td>
+                    <td>@Model[i].Name</td>
                     <td>
-                        <input type="number" step="0.1" min="0" max="10" name="Scores[@student.Id]" class="form-control" />
+                        <input type="hidden" name="Students[@i].Id" value="@Model[i].Id" />
+                        <input type="number" step="0.1" min="0" max="10" name="Students[@i].Score" class="form-control" />
                     </td>
                 </tr>
             }
@@ -28,4 +30,4 @@
     </table>
 
     <button type="submit" class="btn btn-success">Lưu điểm</button>
-</form>
+</form> *@

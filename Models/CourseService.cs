@@ -1,16 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using StudentApp.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace StudentApp.Services
+namespace StudentApp.Models
 {
     public interface ICourseService
     {
-        List<Course> GetCourses(); // Lấy danh sách tất cả khóa học
-        List<Course> GetStudentCourses(int studentId); // Lấy khóa học mà sinh viên đã đăng ký
-        bool IsStudentRegistered(int studentId, int courseId); // Kiểm tra sinh viên đã đăng ký khóa học chưa
-        void RegisterStudentToCourse(int studentId, int courseId); // Đăng ký khóa học cho sinh viên
-        void UnregisterStudentFromCourse(int studentId, int courseId); // Hủy đăng ký khóa học
+        List<Course> GetCourses(); // Lấy danh sách học phần
+        List<Course> GetStudentCourses(string maSV); // Lấy các học phần đã đăng ký
+        bool IsStudentRegistered(string maSV, string maHP); // Kiểm tra đã đăng ký chưa
+        bool RegisterStudentToCourse(string maSV, string maHP); // Đăng ký học phần
+        bool UnregisterStudentFromCourse(string maSV, string maHP); // Hủy đăng ký
     }
 
     public class CourseService : ICourseService
@@ -27,37 +28,61 @@ namespace StudentApp.Services
             return _context.Courses.ToList();
         }
 
-        public List<Course> GetStudentCourses(int studentId)
+        public List<Course> GetStudentCourses(string maSV)
         {
-            return _context.StudentCourses
-                .Where(sc => sc.StudentId == studentId)
-                .Include(sc => sc.Course)
-                .Select(sc => sc.Course)
+            return _context.CourseRegistrations
+                .Where(cr => cr.MaSV == maSV)
+                .Include(cr => cr.CourseClasses)
+                    .ThenInclude(cc => cc.Course)
+                .Select(cr => cr.CourseClasses.Course)
+                .Distinct()
                 .ToList();
         }
 
-        public bool IsStudentRegistered(int studentId, int courseId)
+        public bool IsStudentRegistered(string maSV, string maHP)
         {
-            return _context.StudentCourses.Any(sc => sc.StudentId == studentId && sc.CourseId == courseId);
+            return _context.CourseRegistrations
+            .Include(cr => cr.CourseClasses)
+            .ThenInclude(cc => cc.Course)
+            .Any(cr => cr.MaSV == maSV && cr.CourseClasses.Course.MaHP == maHP);
+
         }
 
-        public void RegisterStudentToCourse(int studentId, int courseId)
+        public bool RegisterStudentToCourse(string maSV, string maHP)
         {
-            if (!IsStudentRegistered(studentId, courseId))
+            if (IsStudentRegistered(maSV, maHP))
+                return false;
+
+            var courseClass = _context.CourseClasses.FirstOrDefault(cc => cc.MaHP == maHP);
+            if (courseClass == null)
+                return false;
+
+            var registration = new CourseRegistration
             {
-                _context.StudentCourses.Add(new StudentCourse { StudentId = studentId, CourseId = courseId });
-                _context.SaveChanges();
-            }
+                MaSV = maSV,
+                MaLHP = courseClass.MaLHP,
+                NgayDK = DateTime.Now
+            };
+
+            _context.CourseRegistrations.Add(registration);
+            _context.SaveChanges();
+            return true;
         }
 
-        public void UnregisterStudentFromCourse(int studentId, int courseId)
+        public bool UnregisterStudentFromCourse(string maSV, string maHP)
         {
-            var studentCourse = _context.StudentCourses.FirstOrDefault(sc => sc.StudentId == studentId && sc.CourseId == courseId);
-            if (studentCourse != null)
+            var registration = _context.CourseRegistrations
+                .Include(cr => cr.CourseClasses)
+                .FirstOrDefault(cr => cr.MaSV == maSV && cr.CourseClasses.MaHP == maHP);
+
+            if (registration != null)
             {
-                _context.StudentCourses.Remove(studentCourse);
+                _context.CourseRegistrations.Remove(registration);
                 _context.SaveChanges();
+                return true;
             }
+
+            return false;
         }
     }
 }

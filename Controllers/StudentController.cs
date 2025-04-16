@@ -1,139 +1,151 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using StudentApp.Models;
-using StudentApp.Services;
-using System.Threading.Tasks;
 
-namespace StudentApp.Controllers;
-
-public class StudentController(
-    IStudentService studentService,
-    IDepartmentService departmentService,
-    ICourseService courseService
-    ) : Controller
+namespace StudentApp.Controllers
 {
-    private readonly IStudentService _studentService = studentService;
-    private readonly IDepartmentService _departmentService = departmentService;
-    private readonly ICourseService _courseService = courseService;
-
-    public IActionResult Index()
+    public class StudentController : Controller
     {
-        if (HttpContext.Session == null)
+        private readonly IStudentService _studentService;
+        private readonly DataContext _context;
+
+        public StudentController(IStudentService studentService, DataContext context)
         {
-            throw new InvalidOperationException("Session is not available. Ensure session middleware is enabled.");
+            _studentService = studentService;
+            _context = context;
         }
 
-        string studentCode = HttpContext.Session.GetString("StudentCode");
-
-        if (string.IsNullOrEmpty(studentCode))
+        // Hiển thị trang chính của sinh viên
+        public IActionResult Index()
         {
-            return RedirectToAction("Index", "Login");
+            string studentCode = HttpContext.Session.GetString("UserId");
+
+            if (string.IsNullOrEmpty(studentCode))
+                return RedirectToAction("Index", "Login");
+
+            var student = _studentService.GetStudentByCode(studentCode);
+            if (student == null)
+                return NotFound();
+
+            return View(student);
         }
 
-        var student = _studentService.GetStudentByCode(studentCode);
-
-        ViewBag.Departments = _departmentService.GetDepartments();
-        return View(student);
-    }
-
-    public IActionResult Courses()
-    {
-        var courses = _courseService.GetCourses();
-        return View(courses);
-    }
-
-    public IActionResult Create()
-    {
-        var departments = _departmentService.GetDepartments();
-        return View(departments);
-    }
-
-    public IActionResult Update(int id)
-    {
-        var student = _studentService.GetStudentById(id);
-        ViewBag.Departments = _departmentService.GetDepartments();
-        return View(student);
-    }
-
-    public IActionResult Delete(int id)
-    {
-        _studentService.DeleteStudent(id);
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Save(Student student)
-    {
-        if (student.Id == 0)
+        // Trang thông tin cá nhân sinh viên
+        public IActionResult Profile()
         {
-            _studentService.CreateStudent(student);
-        }
-        else
-        {
-            _studentService.UpdateStudent(student);
-        }
-        return RedirectToAction("Index");
-    }
+            string studentCode = HttpContext.Session.GetString("UserId");
+            var student = _studentService.GetStudentByCode(studentCode);
+            if (student == null)
+                return NotFound();
 
-    [HttpPost]
-    public async Task<IActionResult> RegisterCourse(int courseId)
-    {
-        string studentCode = HttpContext.Session.GetString("StudentCode");
-
-        if (string.IsNullOrEmpty(studentCode))
-        {
-            return RedirectToAction("Index", "Login");
+            return View(student);
         }
 
-        var student = _studentService.GetStudentByCode(studentCode);
-        if (student == null)
+        // [HttpGet]
+        // public IActionResult Timetable()
+        // {
+        //     return View();
+        // }
+
+        [HttpGet]
+        public IActionResult Timetable(int? hocKy, string? namHoc)
         {
-            return NotFound();
+            // Lấy mã sinh viên từ session
+            var studentCode = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(studentCode))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Lấy danh sách năm học từ bảng Course (distinct)
+            var years = _context.Courses
+                        .Select(c => c.NamHoc)
+                        .Distinct()
+                        .OrderByDescending(y => y)
+                        .ToList();
+            ViewBag.Years = years;
+
+            var timetable = _studentService.GetThoiKhoaBieuBySemester(studentCode, hocKy, namHoc);
+            return View(timetable);
         }
 
-        bool isRegistered = _courseService.IsStudentRegistered(student.Id, courseId);
-        if (!isRegistered)
-        {
-            _courseService.RegisterStudentToCourse(student.Id, courseId);
-        }
+        // Cập nhật thông tin sinh viên (POST)
+        // [HttpPost]
+        // public IActionResult Profile(Student updatedStudent)
+        // {
+        //     var student = _studentService.GetStudentByCode(updatedStudent.MaSV);
+        //     if (student != null)
+        //     {
+        //         _studentService.UpdateStudent(updatedStudent);
+        //         TempData["Success"] = "Cập nhật thông tin thành công!";
+        //     }
 
-        return RedirectToAction("Timetable");
-    }
+        //     return RedirectToAction("Profile");
+        // }
 
-    public async Task<IActionResult> Timetable()
-    {
-        string studentCode = HttpContext.Session.GetString("StudentCode");
+        // Hiển thị danh sách học phần để đăng ký
+        // public IActionResult Courses()
+        // {
+        //     var courses = _courseService.GetCourses();
+        //     return View(courses);
+        // }
 
-        if (string.IsNullOrEmpty(studentCode))
-        {
-            return RedirectToAction("Index", "Login");
-        }
+        // // Đăng ký học phần (POST)
+        // [HttpPost]
+        // public IActionResult RegisterCourses(string maHP)
+        // {
+        //     string maSV = HttpContext.Session.GetString("UserId");
+        //     if (string.IsNullOrEmpty(maSV))
+        //         return RedirectToAction("Index", "Login");
 
-        var student = _studentService.GetStudentByCode(studentCode);
-        if (student == null)
-        {
-            return NotFound();
-        }
+        //     var student = _studentService.GetStudentByCode(maSV);
+        //     if (student == null)
+        //         return NotFound();
 
-        var registeredCourses = _courseService.GetStudentCourses(student.Id);
-        return View(registeredCourses);
-    }
+        //     if (!_courseService.IsStudentRegistered(maSV, maHP))
+        //     {
+        //         _courseService.RegisterStudentToCourse(maSV, maHP);
+        //         TempData["Success"] = "Đăng ký học phần thành công!";
+        //     }
+        //     else
+        //     {
+        //         TempData["Error"] = "Bạn đã đăng ký học phần này rồi!";
+        //     }
 
-    [HttpPost]
-    public async Task<IActionResult> UnregisterCourse(int courseId)
-    {
-        string studentCode = HttpContext.Session.GetString("StudentCode");
+        //     return RedirectToAction("Courses");
+        // }
 
-        if (string.IsNullOrEmpty(studentCode))
-        {
-            return RedirectToAction("Index", "Login");
-        }
+        // // Hủy đăng ký học phần (POST)
+        // [HttpPost]
+        // public IActionResult UnregisterCourse(string maHP)
+        // {
+        //     string maSV = HttpContext.Session.GetString("UserId");
+        //     if (string.IsNullOrEmpty(maSV))
+        //         return RedirectToAction("Index", "Login");
 
-        var student = _studentService.GetStudentByCode(studentCode);
-        if (student == null)
-        {
-            return NotFound();
-        }
+        //     var student = _studentService.GetStudentByCode(maSV);
+        //     if (student == null)
+        //         return NotFound();
 
-        _courseService.UnregisterStudentFromCourse(student.Id, courseId);
-        return RedirectToAction("Timetable");
+        //     _courseService.UnregisterStudentFromCourse(maSV, maHP);
+        //     TempData["Success"] = "Hủy đăng ký học phần thành công!";
+
+        //     return RedirectToAction("Timetable");
+        // }
+
+        // Hiển thị danh sách học phần đã đăng ký
+        // public IActionResult Timetable()
+        // {
+        //     string maSV = HttpContext.Session.GetString("UserId");
+        //     if (string.IsNullOrEmpty(maSV))
+        //         return RedirectToAction("Index", "Login");
+
+        //     var student = _studentService.GetStudentByCode(maSV);
+        //     if (student == null)
+        //         return NotFound();
+
+        //     var registeredCourses = _courseService.GetStudentCourses(maSV);
+        //     return View(registeredCourses);
+        // }
     }
 }

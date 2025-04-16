@@ -1,21 +1,68 @@
-@model List<StudentApp.Models.Grade>
+@model IEnumerable<StudentApp.Models.Grade>
 
-<h2>Danh sách điểm</h2>
+@{
+    ViewData["Title"] = "Tra cứu kết quả học tập";
+    var namHocList = ViewBag.NamHocList as List<string>;
+    @* string selectedHocKy = Request.Query["hocKy"]; *@
+    @* string selectedNamHoc = Request.Query["namHoc"]; *@
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Khóa học</th>
-            <th>Điểm số</th>
-        </tr>
-    </thead>
-    <tbody>
+<h2>Tra cứu kết quả học tập</h2>
+
+<form method="get">
+    <label>Kỳ học:</label>
+    <select name="hocKy">
+        <option value="">--Chọn kỳ--</option>
+        <option value="1">Kỳ 1</option>
+        <option value="2">Kỳ 2</option>
+    </select>
+
+    <label>Năm học:</label>
+    <select name="namHoc">
+        <option value="">--Chọn năm--</option>
+        @if (namHocList != null)
+        {
+            foreach (var year in namHocList)
+            {
+                <option value="@year")>@year</option>
+            }
+        }
+    </select>
+
+    <button type="submit">Xem kết quả</button>
+</form>
+
+@if (!Model.Any())
+{
+    <p>Không tìm thấy kết quả học tập nào.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Môn học</th>
+                <th>Số tín chỉ</th>
+                <th>Điểm QT</th>
+                <th>Điểm thi</th>
+                <th>Điểm tổng</th>
+                <th>Kỳ</th>
+                <th>Năm học</th>
+            </tr>
+        </thead>
+        <tbody>
         @foreach (var grade in Model)
         {
-                <tr>
-                    <td>@grade.Course.Name</td>
-                    <td>@grade.Score</td>
-                </tr>
+            <tr>
+                <td>@grade.CourseClasses.Course.TenHP</td>
+                <td>@grade.CourseClasses.Course.SoTinChi</td>
+                <td>@grade.DiemQT</td>
+                <td>@grade.DiemThi</td>
+                <td>@grade.DiemTong</td>
+                <td>@grade.CourseClasses.Course.KiHoc</td>
+                <td>@grade.CourseClasses.Course.NamHoc</td>
+            </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
