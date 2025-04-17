@@ -25,6 +25,11 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+// builder.Services.AddScoped<ICourseClassService, CourseClassService>();
+// builder.Services.AddScoped<ICourseRegistrationService, CourseRegistrationService>();
+// builder.Services.AddScoped<IGradeService, GradeService>();
+
+
 //  Cấu hình Session
 builder.Services.AddDistributedMemoryCache(); // Lưu session trong RAM
 builder.Services.AddSession(options =>

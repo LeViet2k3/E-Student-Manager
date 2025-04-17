@@ -1,0 +1,23 @@
+@{
+    var maSV = ViewBag.MaSV as string;
+    var maLHP = ViewBag.MaLHP as string;
+}
+
+<h2>Nhập điểm cho sinh viên @maSV</h2>
+
+<form asp-action="ThemDiem" method="post">
+    <input type="hidden" name="maSV" value="@maSV" />
+    <input type="hidden" name="maLHP" value="@maLHP" />
+
+    <div class="form-group">
+        <label>Điểm quá trình</label>
+        <input type="number" name="diemQT" class="form-control" step="0.01" required />
+    </div>
+
+    <div class="form-group">
+        <label>Điểm thi</label>
+        <input type="number" name="diemThi" class="form-control" step="0.01" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu điểm</button>
+</form>

@@ -1,0 +1,24 @@
+@model IEnumerable<StudentApp.Models.CourseClass>
+
+<h2>Danh sách lớp học phần</h2>
+<table class="table">
+    <tr>
+        <th>Tên học phần</th>
+        <th>Phòng học</th>
+        <th>Thứ</th>
+        <th>Tiết</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Course.TenHP</td>
+            <td>@item.PhongHoc</td>
+            <td>@item.Thu</td>
+            <td>@item.Tiet</td>
+            <td>
+                <a asp-action="EnterGrade" asp-route-maLHP="@item.MaLHP" class="btn btn-primary">Nhập điểm</a>
+            </td>
+        </tr>
+    }
+</table>
