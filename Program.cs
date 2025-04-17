@@ -5,7 +5,7 @@ using StudentApp.Models;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-// 🛠️ Thêm Authentication bằng Cookie
+//  Thêm Authentication bằng Cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -18,14 +18,14 @@ builder.Services.AddAuthorization();
 
 
 
-// 🛠️ Đăng ký dịch vụ Database
+//  Đăng ký dịch vụ Database
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("Default")));
 
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
-// ✅ Cấu hình Session
+//  Cấu hình Session
 builder.Services.AddDistributedMemoryCache(); // Lưu session trong RAM
 builder.Services.AddSession(options =>
 {
@@ -36,7 +36,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// 🛠️ Cấu hình Middleware
+//  Cấu hình Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -48,11 +48,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Bật Authentication và Authorization
+//  Bật Authentication và Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Bật Session (sau khi app đã được build)
+//  Bật Session (sau khi app đã được build)
 app.UseSession();
 
 app.MapControllerRoute(

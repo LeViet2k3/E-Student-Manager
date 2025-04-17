@@ -1,65 +1,78 @@
 ﻿@model StudentApp.Models.Student
+
 @{
-    ViewData["Title"] = "Thông tin cá nhân";
+    ViewData["Title"] = "Thông tin sinh viên";
 }
 
-<h2>Thông tin cá nhân</h2>
+<h2>@ViewData["Title"]</h2>
 
-@if (ViewBag.Success != null)
+@if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">@ViewBag.Success</div>
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
 }
 
-<form method="post">
+<form asp-action="UpdateProfile" method="post">
+    @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="MaSV" />
 
     <div class="form-group">
-        <label>Mã sinh viên</label>
-        <input asp-for="MaSV" class="form-control" readonly />
-    </div>
-
-    <div class="form-group">
-        <label>Họ tên</label>
+        <label asp-for="HoTen"></label>
         <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Ngày sinh</label>
-        <input asp-for="NgaySinh" type="date" class="form-control" />
+        <label asp-for="NgaySinh"></label>
+        <input asp-for="NgaySinh" class="form-control" type="date" />
+        <span asp-validation-for="NgaySinh" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Giới tính</label>
+        <label asp-for="GioiTinh"></label>
         <select asp-for="GioiTinh" class="form-control">
             <option>Nam</option>
             <option>Nữ</option>
         </select>
+        @* <input asp-for="GioiTinh" class="form-control" /> *@
+        <span asp-validation-for="GioiTinh" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Email</label>
-        <input asp-for="Email" class="form-control" />
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" type="email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Số điện thoại</label>
+        <label asp-for="SDT"></label>
         <input asp-for="SDT" class="form-control" />
+        <span asp-validation-for="SDT" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Địa chỉ</label>
+        <label asp-for="DiaChi"></label>
         <input asp-for="DiaChi" class="form-control" />
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Khoa</label>
+        <label asp-for="Khoa"></label>
         <input asp-for="Khoa" class="form-control" />
+        <span asp-validation-for="Khoa" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Ngành</label>
+        <label asp-for="Nganh"></label>
         <input asp-for="Nganh" class="form-control" />
+        <span asp-validation-for="Nganh" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Lưu thông tin</button>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

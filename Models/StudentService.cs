@@ -55,22 +55,26 @@ public class StudentService(DataContext dataContext) : IStudentService
         _dataContext.SaveChanges();
     }
 
-    public void UpdateStudent(Student student)
-    {
-        var updateStudent = _dataContext.Students.FirstOrDefault(s => s.MaSV == student.MaSV);
-        if (updateStudent == null) return;
+   public void UpdateStudent(Student student)
+        {
+            var existingStudent = _dataContext.Students.FirstOrDefault(s => s.MaSV == student.MaSV);
+            if (existingStudent != null)
+            {
+                // Cập nhật thông tin sinh viên
+                existingStudent.HoTen = student.HoTen;
+                existingStudent.NgaySinh = student.NgaySinh;
+                existingStudent.GioiTinh = student.GioiTinh;
+                existingStudent.Email = student.Email;
+                existingStudent.SDT = student.SDT;
+                existingStudent.DiaChi = student.DiaChi;
+                existingStudent.Khoa = student.Khoa;
+                existingStudent.Nganh = student.Nganh;
 
-        updateStudent.HoTen = student.HoTen;
-        updateStudent.NgaySinh = student.NgaySinh;
-        updateStudent.GioiTinh = student.GioiTinh;
-        updateStudent.Email = student.Email;
-        updateStudent.SDT = student.SDT;
-        updateStudent.DiaChi = student.DiaChi;
-        updateStudent.Khoa = student.Khoa;
-        updateStudent.Nganh = student.Nganh;
+                // Lưu lại thay đổi vào cơ sở dữ liệu
+                _dataContext.SaveChanges();
+            }
+        }
 
-        _dataContext.SaveChanges();
-    }
 
     public void DeleteStudent(string maSV)
     {
