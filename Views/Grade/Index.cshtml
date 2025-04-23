@@ -3,66 +3,77 @@
 @{
     ViewData["Title"] = "Tra cứu kết quả học tập";
     var namHocList = ViewBag.NamHocList as List<string>;
-    @* string selectedHocKy = Request.Query["hocKy"]; *@
-    @* string selectedNamHoc = Request.Query["namHoc"]; *@
 }
 
-<h2>Tra cứu kết quả học tập</h2>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-white text-dark text-center border-bottom rounded-top-4">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Kỳ học</label>
+                    <select name="hocKy" class="form-select">
+                        <option value="">--Chọn kỳ--</option>
+                        <option value="1">Kỳ 1</option>
+                        <option value="2">Kỳ 2</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Năm học</label>
+                    <select name="namHoc" class="form-select">
+                        <option value="">--Chọn năm--</option>
+                        @if (namHocList != null)
+                        {
+                            foreach (var year in namHocList)
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill">Xem kết quả</button>
+                </div>
+            </form>
 
-<form method="get">
-    <label>Kỳ học:</label>
-    <select name="hocKy">
-        <option value="">--Chọn kỳ--</option>
-        <option value="1">Kỳ 1</option>
-        <option value="2">Kỳ 2</option>
-    </select>
-
-    <label>Năm học:</label>
-    <select name="namHoc">
-        <option value="">--Chọn năm--</option>
-        @if (namHocList != null)
-        {
-            foreach (var year in namHocList)
+            @if (!Model.Any())
             {
-                <option value="@year")>@year</option>
+                <div class="alert alert-warning text-center">Không tìm thấy kết quả học tập nào.</div>
             }
-        }
-    </select>
-
-    <button type="submit">Xem kết quả</button>
-</form>
-
-@if (!Model.Any())
-{
-    <p>Không tìm thấy kết quả học tập nào.</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Môn học</th>
-                <th>Số tín chỉ</th>
-                <th>Điểm QT</th>
-                <th>Điểm thi</th>
-                <th>Điểm tổng</th>
-                <th>Kỳ</th>
-                <th>Năm học</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var grade in Model)
-        {
-            <tr>
-                <td>@grade.CourseClasses.Course.TenHP</td>
-                <td>@grade.CourseClasses.Course.SoTinChi</td>
-                <td>@grade.DiemQT</td>
-                <td>@grade.DiemThi</td>
-                <td>@grade.DiemTong</td>
-                <td>@grade.CourseClasses.Course.KiHoc</td>
-                <td>@grade.CourseClasses.Course.NamHoc</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Môn học</th>
+                                <th>Số tín chỉ</th>
+                                <th>Điểm QT</th>
+                                <th>Điểm thi</th>
+                                <th>Điểm tổng</th>
+                                <th>Kỳ</th>
+                                <th>Năm học</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var grade in Model)
+                        {
+                            <tr>
+                                <td>@grade.CourseClasses.Course.TenHP</td>
+                                <td>@grade.CourseClasses.Course.SoTinChi</td>
+                                <td>@grade.DiemQT</td>
+                                <td>@grade.DiemThi</td>
+                                <td>@grade.DiemTong</td>
+                                <td>@grade.CourseClasses.Course.KiHoc</td>
+                                <td>@grade.CourseClasses.Course.NamHoc</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -4,74 +4,157 @@
     ViewData["Title"] = "Thông tin sinh viên";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <div class="profile-card bg-white shadow rounded p-5">
+        <div class="profile-header mb-4">
+            <h2 class="text-center fw-bold text-primary mb-3">Thông tin cá nhân</h2>
+            <p class="text-muted text-center">Xem và chỉnh sửa thông tin hồ sơ của bạn.</p>
+        </div>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success border-0 bg-light text-success rounded-md mb-3">
+                <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <form asp-action="UpdateProfile" method="post" class="row g-3">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="MaSV" />
+
+            <div class="col-md-6">
+                <label asp-for="HoTen" class="form-label fw-semibold">Họ và tên</label>
+                <input asp-for="HoTen" class="form-control form-control-lg rounded-md" />
+                <span asp-validation-for="HoTen" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="NgaySinh" class="form-label fw-semibold">Ngày sinh</label>
+                <input asp-for="NgaySinh" class="form-control form-control-lg rounded-md" type="date" />
+                <span asp-validation-for="NgaySinh" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="GioiTinh" class="form-label fw-semibold">Giới tính</label>
+                <select asp-for="GioiTinh" class="form-select form-select-lg rounded-md">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+                <span asp-validation-for="GioiTinh" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Email" class="form-label fw-semibold">Email</label>
+                <input asp-for="Email" class="form-control form-control-lg rounded-md" type="email" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="SDT" class="form-label fw-semibold">Số điện thoại</label>
+                <input asp-for="SDT" class="form-control form-control-lg rounded-md" />
+                <span asp-validation-for="SDT" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="DiaChi" class="form-label fw-semibold">Địa chỉ</label>
+                <input asp-for="DiaChi" class="form-control form-control-lg rounded-md" />
+                <span asp-validation-for="DiaChi" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Khoa" class="form-label fw-semibold">Khoa</label>
+                <input asp-for="Khoa" class="form-control form-control-lg rounded-md" />
+                <span asp-validation-for="Khoa" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Nganh" class="form-label fw-semibold">Ngành</label>
+                <input asp-for="Nganh" class="form-control form-control-lg rounded-md" />
+                <span asp-validation-for="Nganh" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12 mt-4 d-flex justify-content-center align-items-center">
+    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow me-2">Lưu</button>
+    <a asp-action="Index" asp-controller="Student" class="btn btn-outline-secondary btn-lg rounded-pill ms-2">Hủy</a>
+</div>
+        </form>
     </div>
-}
+</div>
 
-<form asp-action="UpdateProfile" method="post">
-    @Html.AntiForgeryToken()
+<style>
+    .profile-card {
+        border-radius: 12px;
+    }
 
-    <input type="hidden" asp-for="MaSV" />
+    .profile-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1.5rem;
+    }
 
-    <div class="form-group">
-        <label asp-for="HoTen"></label>
-        <input asp-for="HoTen" class="form-control" />
-        <span asp-validation-for="HoTen" class="text-danger"></span>
-    </div>
+    .form-label {
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
 
-    <div class="form-group">
-        <label asp-for="NgaySinh"></label>
-        <input asp-for="NgaySinh" class="form-control" type="date" />
-        <span asp-validation-for="NgaySinh" class="text-danger"></span>
-    </div>
+    .form-control-lg,
+    .form-select-lg {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+    }
 
-    <div class="form-group">
-        <label asp-for="GioiTinh"></label>
-        <select asp-for="GioiTinh" class="form-control">
-            <option>Nam</option>
-            <option>Nữ</option>
-        </select>
-        <span asp-validation-for="GioiTinh" class="text-danger"></span>
-    </div>
+    .rounded-md {
+        border-radius: 0.5rem !important;
+    }
 
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" type="email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+    .rounded-pill {
+        border-radius: 50px !important;
+    }
 
-    <div class="form-group">
-        <label asp-for="SDT"></label>
-        <input asp-for="SDT" class="form-control" />
-        <span asp-validation-for="SDT" class="text-danger"></span>
-    </div>
+    .btn-primary,
+    .btn-outline-secondary {
+        padding: 1rem 1.5rem; 
+        font-size: 1rem; 
+        line-height: 1.5; 
+        display: inline-flex; 
+        align-items: center;
+        justify-content: center;
+        height: auto;
+    }
 
-    <div class="form-group">
-        <label asp-for="DiaChi"></label>
-        <input asp-for="DiaChi" class="form-control" />
-        <span asp-validation-for="DiaChi" class="text-danger"></span>
-    </div>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
 
-    <div class="form-group">
-        <label asp-for="Khoa"></label>
-        <input asp-for="Khoa" class="form-control" />
-        <span asp-validation-for="Khoa" class="text-danger"></span>
-    </div>
+    .btn-primary:hover {
+        background-color: #0056b3;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
 
-    <div class="form-group">
-        <label asp-for="Nganh"></label>
-        <input asp-for="Nganh" class="form-control" />
-        <span asp-validation-for="Nganh" class="text-danger"></span>
-    </div>
+    .btn-outline-secondary {
+        border-radius: 50px;
+        transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
 
-    <button type="submit" class="btn btn-primary">Cập nhật</button>
-</form>
+    .btn-outline-secondary:hover {
+        background-color: #e9ecef;
+        border-color: #ced4da;
+        color: #000;
+    }
+
+    .alert-success {
+        border-left: 4px solid #28a745;
+    }
+
+    .text-danger.small {
+        font-size: 0.85em;
+    }
+</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.5/font/bootstrap-icons.min.css">

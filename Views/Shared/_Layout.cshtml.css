@@ -11,6 +11,13 @@ a {
   color: #0077cc;
 }
 
+header {
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+}
+
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

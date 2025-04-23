@@ -11,6 +11,13 @@ a[b-ak0w5rm0kc] {
   color: #0077cc;
 }
 
+header[b-ak0w5rm0kc] {
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+}
+
+
 .btn-primary[b-ak0w5rm0kc] {
   color: #fff;
   background-color: #1b6ec2;

@@ -1,23 +1,39 @@
 @{
     var maSV = ViewBag.MaSV as string;
     var maLHP = ViewBag.MaLHP as string;
+    ViewData["Title"] = "Nhập điểm sinh viên";
 }
 
-<h2>Nhập điểm cho sinh viên @maSV</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg rounded-4 border-0">
+                <div class="card-header bg-white text-dark text-center rounded-top-4 border-bottom">
+                    <h4 class="mb-0">@ViewData["Title"]</h4>
+                    <small class="text-muted">Mã sinh viên: @maSV</small>
+                </div>
 
-<form asp-action="ThemDiem" method="post">
-    <input type="hidden" name="maSV" value="@maSV" />
-    <input type="hidden" name="maLHP" value="@maLHP" />
+                <div class="card-body p-4">
+                    <form asp-action="ThemDiem" method="post">
+                        <input type="hidden" name="maSV" value="@maSV" />
+                        <input type="hidden" name="maLHP" value="@maLHP" />
 
-    <div class="form-group">
-        <label>Điểm quá trình</label>
-        <input type="number" name="diemQT" class="form-control" step="0.01" required />
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Điểm quá trình</label>
+                            <input type="number" name="diemQT" class="form-control" step="0.01" min="0" max="10" required placeholder="Nhập điểm quá trình..." />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Điểm thi</label>
+                            <input type="number" name="diemThi" class="form-control" step="0.01" min="0" max="10" required placeholder="Nhập điểm thi..." />
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success px-4 rounded-pill">Lưu điểm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label>Điểm thi</label>
-        <input type="number" name="diemThi" class="form-control" step="0.01" required />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Lưu điểm</button>
-</form>
+</div>

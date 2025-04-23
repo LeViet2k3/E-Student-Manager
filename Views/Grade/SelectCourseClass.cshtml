@@ -1,24 +1,49 @@
 @model IEnumerable<StudentApp.Models.CourseClass>
 
-<h2>Danh sách lớp học phần</h2>
-<table class="table">
-    <tr>
-        <th>Tên học phần</th>
-        <th>Phòng học</th>
-        <th>Thứ</th>
-        <th>Tiết</th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Course.TenHP</td>
-            <td>@item.PhongHoc</td>
-            <td>@item.Thu</td>
-            <td>@item.Tiet</td>
-            <td>
-                <a asp-action="EnterGrade" asp-route-maLHP="@item.MaLHP" class="btn btn-primary">Nhập điểm</a>
-            </td>
-        </tr>
-    }
-</table>
+@{
+    ViewData["Title"] = "Danh sách lớp học phần";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-header bg-white text-center border-bottom rounded-top-4">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info text-center">Không có lớp học phần nào để hiển thị.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tên học phần</th>
+                                <th>Phòng học</th>
+                                <th>Thứ</th>
+                                <th>Tiết</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Course.TenHP</td>
+                                    <td>@item.PhongHoc</td>
+                                    <td>@item.Thu</td>
+                                    <td>@item.Tiet</td>
+                                    <td>
+                                        <a asp-action="EnterGrade" asp-route-maLHP="@item.MaLHP" class="btn btn-outline-primary btn-sm rounded-pill">Nhập điểm</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

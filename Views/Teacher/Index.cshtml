@@ -2,74 +2,91 @@
     ViewData["Title"] = "Trang chủ";
 }
 
-<div class="container text-center">
-    <h2 class="mb-4">Hệ thống quản lý giảng viên</h2>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div>
-            <span>Xin chào, @User.Identity.Name!</span>
-            <a href="@Url.Action("Logout", "Login")" class="btn btn-danger ms-3">Đăng xuất</a>
-        </div>
-    }
+<div class="container mt-5">
+    <div class="jumbotron bg-light rounded p-5">
+        <h1 class="display-4 text-center mb-4">Hệ thống quản lý giảng viên</h1>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="text-center mb-3">
+                <span class="lead">Xin chào, @User.Identity.Name!</span>
+                <a href="@Url.Action("Logout", "Login")" class="btn btn-danger ms-3">
+                    <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
+                </a>
+            </div>
+        }
+        <div class="row justify-content-center">
+            <div class="col-md-3 mb-4">
+                <a href="@Url.Action("Profile", "Teacher")" class="menu-card">
+                    <img src="~/images/student_info.png" alt="Thông tin giang viên">
+                    <p>Thông tin giảng viên</p>
+                </a>
+            </div>
 
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            <a href="@Url.Action("Profile", "Teacher")" class="menu-item">
-                <img src="~/images/student_info.png" alt="Thông tin sinh viên">
-                <p>Thông tin giảng viên</p>
-            </a>
-        </div>
+            <div class="col-md-3 mb-4">
+                <a href="@Url.Action("SelectCourseClass", "Grade")" class="menu-card">
+                    <img src="~/images/grade_manager.png" alt="Quan ly diem">
+                    <p>Quản lý điểm</p>
+                </a>
+            </div>
 
-
-        <div class="col-md-3 mb-3">
-            <a href="@Url.Action("SelectCourseClass", "Grade")" class="menu-item">
-                <img src="~/images/grade_manager.png" alt="Đăng ký học phần">
-                <p>Quản lý điểm</p>
-            </a>
-        </div>
-
-
-        <div class="col-md-3 mb-3">
-            <a href="@Url.Action("Index", "Grade")" class="menu-item">
-                <img src="~/images/see_class_list.png" alt="Kết quả học tập">
+            <div class="col-md-3 mb-4">
+                <a href="@Url.Action("Index", "Grade")" class="menu-card">
+                <img src="~/images/see_class_list.png" alt="Xem danh sach lop hoc">
                 <p>Xem danh sách lớp học</p>
-            </a>
-        </div>
+                </a>
+            </div>
 
-
-        <div class="col-md-3 mb-3">
-            <a href="@Url.Action("Timetable", "Student")" class="menu-item">
-                <img src="~/images/timetable.png" alt="Thời khóa biểu">
-                <p>Xem lịch dạy</p>
-            </a>
+            <div class="col-md-3 mb-4">
+                <a href="@Url.Action("Timetable", "Student")" class="menu-card">
+                    <img src="~/images/timetable.png" alt="Xem lich day">
+                    <p>Xem lịch dạy</p>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-    .menu-item {
+    .jumbotron {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-card {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         text-decoration: none;
-        color: black;
+        color: #333;
         border: 1px solid #ddd;
         border-radius: 8px;
-        padding: 15px;
-        background-color: #f8f9fa;
+        padding: 20px;
+        background-color: #fff;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        height: 150px; /* Đặt chiều cao cố định cho các thẻ menu */
     }
 
-    .menu-item img {
-        width: 80px;
-        height: 80px;
+    .menu-icon {
+        font-size: 3rem; /* Tăng kích thước icon */
+        margin-bottom: 10px;
+        color: #007bff; /* Màu icon chủ đạo */
     }
 
-    .menu-item p {
-        margin-top: 10px;
+    .menu-text {
         font-weight: bold;
+        text-align: center;
+        margin-bottom: 0;
     }
 
-    .menu-item:hover {
-        background-color: #e2e6ea;
+    .menu-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        background-color: #e9ecef;
+    }
+
+    .btn-danger {
+        border-radius: 5px;
     }
 </style>

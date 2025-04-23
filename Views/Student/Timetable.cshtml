@@ -1,65 +1,73 @@
 @model List<StudentApp.Models.CourseRegistration>
 @{
-    ViewData["Title"] = "Timetable";
+    ViewData["Title"] = "Thời Khóa Biểu";
     var years = ViewBag.Years as List<string>;
 }
 
-<h2>Thời Khóa Biểu</h2>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-white text-dark text-center border-bottom rounded-top-4">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Kỳ học</label>
+                    <select name="hocKy" class="form-select">
+                        <option value="">--Chọn kỳ--</option>
+                        <option value="1">Kỳ 1</option>
+                        <option value="2">Kỳ 2</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Năm học</label>
+                    <select name="namHoc" class="form-select">
+                        <option value="">-- Chọn năm --</option>
+                        @foreach (var year in years)
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill">Xem thời khóa biểu</button>
+                </div>
+            </form>
 
-<form method="get" class="form-inline mb-4">
-    <div class="form-group">
-        <label for="hocKy">Kỳ học:</label>
-        <select name="hocKy" class="form-control mx-2">
-                <option value="">--Chọn kỳ--</option>
-                <option value="1">Kỳ 1</option>
-                <option value="2">Kỳ 2</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="namHoc">Năm học:</label>
-        <select name="namHoc" class="form-control mx-2">
-            <option value="">-- Chọn năm --</option>
-            @foreach (var y in years)
-            
+            @if (Model == null || !Model.Any())
             {
-                <option value="@y">@y</option>
+                <div class="alert alert-warning text-center">Không tìm thấy thời khóa biểu.</div>
             }
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Xem kết quả</button>
-</form>
-
-@if (Model != null && Model.Count > 0)
-{
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Tên học phần</th>
-                <th>Thứ</th>
-                <th>Tiết</th>
-                <th>Phòng học</th>
-                <th>Kỳ học</th>
-                <th>Năm học</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+            else
             {
-                <tr>
-                    <td>@item.CourseClasses.Course.TenHP</td>
-                    <td>@item.CourseClasses.Thu</td>
-                    <td>@item.CourseClasses.Tiet</td>
-                    <td>@item.CourseClasses.PhongHoc</td>
-                    <td>@item.CourseClasses.Course.KiHoc</td>
-                    <td>@item.CourseClasses.Course.NamHoc</td>
-                </tr>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tên học phần</th>
+                                <th>Thứ</th>
+                                <th>Tiết</th>
+                                <th>Phòng học</th>
+                                <th>Kỳ học</th>
+                                <th>Năm học</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.CourseClasses.Course.TenHP</td>
+                                <td>@item.CourseClasses.Thu</td>
+                                <td>@item.CourseClasses.Tiet</td>
+                                <td>@item.CourseClasses.PhongHoc</td>
+                                <td>@item.CourseClasses.Course.KiHoc</td>
+                                <td>@item.CourseClasses.Course.NamHoc</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
             }
-        </tbody>
-    </table>
-}
-else if (Model != null)
-{
-    <p class="text-danger">Không tìm thấy dữ liệu.</p>
-}
+        </div>
+    </div>
+</div>
