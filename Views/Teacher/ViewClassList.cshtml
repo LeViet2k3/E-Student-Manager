@@ -1,0 +1,53 @@
+@model IEnumerable<dynamic>
+@{
+    var maLHP = ViewBag.MaLHP as string;
+}
+<head>
+    <link rel="stylesheet" href="viewclasslist.cshtml.css" />
+</head>
+<h3 class="text-center mt-4 print-only">
+    Danh sách sinh viên lớp học phần @maLHP
+</h3>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-white text-dark text-center rounded-top-4 border-bottom no-print">
+            <h3 class="mb-0">Danh sách sinh viên lớp học phần @maLHP</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Mã SV</th>
+                            <th>Họ tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Email</th>
+                            <th>Khoa</th>
+                            <th>Ngành</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sv in Model)
+                        {
+                            <tr>
+                                <td>@sv.MaSV</td>
+                                <td>@sv.HoTen</td>
+                                <td>@(sv.NgaySinh.ToString("dd/MM/yyyy"))</td>
+                                <td>@sv.Email</td>
+                                <td>@sv.Khoa</td>
+                                <td>@sv.Nganh</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Nút in danh sách -->
+            <div class="text-end mt-3 no-print">
+                <button onclick="window.print()" class="btn btn-outline-success">
+                    🖨️ In danh sách
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

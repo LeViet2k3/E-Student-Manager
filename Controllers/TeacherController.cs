@@ -72,6 +72,42 @@ namespace StudentApp.Controllers
             return RedirectToAction("Profile");
         }
 
+        public async Task<IActionResult> SelectCourseClass()
+        {
+            string maGV = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(maGV))
+            {
+                return Content("Không tìm thấy mã giảng viên trong session. Đã đăng nhập chưa?");
+            }
+            var classes = await _context.CourseClasses
+                .Include(c => c.Course)
+                .Where(c => c.MaGV == maGV)
+                .ToListAsync();
+
+            return View("SelectCourseClass", classes);
+        }
+
+        public async Task<IActionResult> ViewClassList(string maLHP)
+        {
+            var studentGrades = await _context.CourseRegistrations
+                .Where(r => r.MaLHP == maLHP)
+                .Include(r => r.Students)
+                .Select(r => new
+                {
+                    MaSV = r.Students.MaSV,
+                    HoTen = r.Students.HoTen,
+                    NgaySinh = r.Students.NgaySinh,
+                    Email = r.Students.Email,
+                    Khoa = r.Students.Khoa,
+                    Nganh = r.Students.Nganh
+                })
+                .ToListAsync();
+
+            ViewBag.MaLHP = maLHP;
+
+            return View("ViewClassList", studentGrades);
+        }
+
 
     }
 }

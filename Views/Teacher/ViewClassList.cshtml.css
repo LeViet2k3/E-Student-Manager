@@ -1,0 +1,47 @@
+    @media print {
+        /* Ẩn nút in */
+        .no-print {
+            display: none !important;
+        }
+        /* Gỡ bo góc, shadow, padding thừa của card */
+        .card {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+        }
+
+        .card-header {
+            border-bottom: 1px solid #000 !important;
+            border-radius: 0 !important;
+        }
+
+        /* Gỡ cuộn ngang */
+        .table-responsive {
+            overflow: visible !important;
+        }
+
+        /* Table in full width */
+        table {
+            width: 100% !important;
+        }
+
+        th, td {
+            border: 1px solid #000 !important;
+            padding: 6px !important;
+        }
+
+        th {
+            background-color: #eee !important;
+        }
+
+        body {
+            margin: 10px;
+            font-size: 14pt;
+        }
+    }
+    @media screen {
+        .print-only {
+            display: none !important;
+        }
+    }

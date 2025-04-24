@@ -54,3 +54,56 @@ button.accept-policy[b-ak0w5rm0kc] {
   white-space: nowrap;
   line-height: 60px;
 }
+@media print {
+  .footer[b-ak0w5rm0kc] {
+      display: none !important;
+  }
+}
+/* _content/StudentApp/Views/Teacher/ViewClassList.cshtml.rz.scp.css */
+    @media print {
+        /* Ẩn nút in */
+        .no-print[b-odkurmwo67] {
+            display: none !important;
+        }
+        /* Gỡ bo góc, shadow, padding thừa của card */
+        .card[b-odkurmwo67] {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+        }
+
+        .card-header[b-odkurmwo67] {
+            border-bottom: 1px solid #000 !important;
+            border-radius: 0 !important;
+        }
+
+        /* Gỡ cuộn ngang */
+        .table-responsive[b-odkurmwo67] {
+            overflow: visible !important;
+        }
+
+        /* Table in full width */
+        table[b-odkurmwo67] {
+            width: 100% !important;
+        }
+
+        th[b-odkurmwo67], td[b-odkurmwo67] {
+            border: 1px solid #000 !important;
+            padding: 6px !important;
+        }
+
+        th[b-odkurmwo67] {
+            background-color: #eee !important;
+        }
+
+        body[b-odkurmwo67] {
+            margin: 10px;
+            font-size: 14pt;
+        }
+    }
+    @media screen {
+        .print-only[b-odkurmwo67] {
+            display: none !important;
+        }
+    }

@@ -53,3 +53,8 @@ button.accept-policy[b-ak0w5rm0kc] {
   white-space: nowrap;
   line-height: 60px;
 }
+@media print {
+  .footer[b-ak0w5rm0kc] {
+      display: none !important;
+  }
+}

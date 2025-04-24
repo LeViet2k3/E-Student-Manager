@@ -271,3 +271,4 @@ D:\Tài liệu\Kì 2 năm 4\Khóa luận tốt nghiệp\E-Student-Manager\obj\De
 D:\Tài liệu\Kì 2 năm 4\Khóa luận tốt nghiệp\E-Student-Manager\obj\Debug\net8.0\StudentApp.pdb
 D:\Tài liệu\Kì 2 năm 4\Khóa luận tốt nghiệp\E-Student-Manager\obj\Debug\net8.0\StudentApp.genruntimeconfig.cache
 D:\Tài liệu\Kì 2 năm 4\Khóa luận tốt nghiệp\E-Student-Manager\obj\Debug\net8.0\ref\StudentApp.dll
+D:\Tài liệu\Kì 2 năm 4\Khóa luận tốt nghiệp\E-Student-Manager\obj\Debug\net8.0\scopedcss\Views\Teacher\ViewClassList.cshtml.rz.scp.css
