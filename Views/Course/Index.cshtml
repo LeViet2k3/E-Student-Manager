@@ -3,59 +3,107 @@
     ViewData["Title"] = "Danh sách học phần";
     var maSV = ViewBag.MaSV as string;
     var registeredCourseIds = ViewBag.RegisteredCourseIds as List<string>;
+    var hocKy = ViewBag.HocKy as string;
+    var namHoc = ViewBag.NamHoc as string;
 }
 
 <div class="container mt-4">
     <h2 class="text-center mb-4">@ViewData["Title"]</h2>
 
-    @if (TempData["Message"] != null)
+    @if (TempData["Error"] != null)
     {
-        <div class="alert alert-info text-center">@TempData["Message"]</div>
+        <div class="alert alert-danger text-center">@TempData["Error"]</div>
     }
 
-    <div class="table-responsive shadow rounded-4 border">
-        <table class="table table-bordered align-middle mb-0">
-            <thead class="table-light text-center">
-                <tr>
-                    <th>Mã học phần</th>
-                    <th>Tên học phần</th>
-                    <th>Số tín chỉ</th>
-                    <th>Kỳ học</th>
-                    <th>Năm học</th>
-                    <th>Khoa</th>
-                    <th>Ngành</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var hp in Model)
+    <!-- Form lọc chỉ theo năm học -->
+    <form method="get" class="row g-3 align-items-end mb-4">
+        @* Nếu bạn muốn thêm lại phần lọc kỳ học, mở phần này *@
+        @* <div class="col-md-4">
+            <label class="form-label fw-semibold">Kỳ học</label>
+            <select name="hocKy" class="form-select">
+                <option value="">--Chọn kỳ--</option>
+                <option value="1" @(hocKy == "1" ? "selected" : "")>Kỳ 1</option>
+                <option value="2" @(hocKy == "2" ? "selected" : "")>Kỳ 2</option>
+            </select>
+        </div> *@
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Năm học</label>
+            <select name="namHoc" class="form-select">
+                <option value="">--Chọn năm--</option>
+                @if (ViewBag.NamHocList != null)
                 {
-                    var isRegistered = registeredCourseIds.Contains(hp.MaHP);
-                    <tr class="@((isRegistered ? "table-success" : ""))">
-                        <td>@hp.MaHP</td>
-                        <td>@hp.TenHP</td>
-                        <td class="text-center">@hp.SoTinChi</td>
-                        <td class="text-center">@hp.KiHoc</td>
-                        <td class="text-center">@hp.NamHoc</td>
-                        <td>@hp.Khoa</td>
-                        <td>@hp.Nganh</td>
-                        <td class="text-center">
-                            @if (isRegistered)
-                            {
-                                <span class="badge bg-success px-3 py-2">Đã đăng ký</span>
-                            }
-                            else
-                            {
-                                <form asp-action="Register" asp-controller="Course" method="post" class="d-inline">
-                                    <input type="hidden" name="maHP" value="@hp.MaHP" />
-                                    <input type="hidden" name="maSV" value="@maSV" />
-                                    <button type="submit" class="btn btn-primary rounded-pill px-3">Đăng ký</button>
-                                </form>
-                            }
-                        </td>
-                    </tr>
+                    foreach (var year in ViewBag.NamHocList as List<string>)
+                    {
+                        <option value="@year" selected="@(namHoc == year ? "selected" : null)">@year</option>
+                    }
                 }
-            </tbody>
-        </table>
-    </div>
+            </select>
+        </div>
+        <div class="col-md-3 d-grid">
+            <button type="submit" class="btn btn-primary rounded-pill">Xem kết quả</button>
+        </div>
+    </form>
+
+    <!-- Hiển thị danh sách học phần -->
+    @foreach (var yearGroup in Model.GroupBy(c => c.NamHoc))
+    {
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <h4>@yearGroup.Key</h4>
+            </div>
+
+            @foreach (var semesterGroup in yearGroup.GroupBy(c => c.KiHoc))
+            {
+                <div class="card-body">
+                    <h5 class="card-title">Kỳ @semesterGroup.Key</h5>
+                    <div class="table-responsive shadow rounded-4 border">
+                        <table class="table table-bordered align-middle mb-0">
+                            <thead class="table-light text-center">
+                                <tr>
+                                    <th>Mã học phần</th>
+                                    <th>Tên học phần</th>
+                                    <th>Số tín chỉ</th>
+                                    <th>Kỳ học</th>
+                                    <th>Năm học</th>
+                                    <th>Khoa</th>
+                                    <th>Ngành</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hp in semesterGroup)
+                                {
+                                    var isRegistered = registeredCourseIds.Contains(hp.MaHP);
+                                    <tr class="@(isRegistered ? "table-success" : "")">
+                                        <td>@hp.MaHP</td>
+                                        <td>@hp.TenHP</td>
+                                        <td class="text-center">@hp.SoTinChi</td>
+                                        <td class="text-center">@hp.KiHoc</td>
+                                        <td class="text-center">@hp.NamHoc</td>
+                                        <td>@hp.Khoa</td>
+                                        <td>@hp.Nganh</td>
+                                        <td class="text-center">
+                                            @if (isRegistered)
+                                            {
+                                                <span class="badge bg-success px-3 py-2">Đã đăng ký</span>
+                                            }
+                                            else
+                                            {
+                                                <form asp-action="Register" asp-controller="Course" method="post" class="d-inline">
+                                                    <input type="hidden" name="maHP" value="@hp.MaHP" />
+                                                    <input type="hidden" name="maSV" value="@maSV" />
+                                                    <button type="submit" class="btn btn-primary rounded-pill px-3">Đăng ký</button>
+                                                </form>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>

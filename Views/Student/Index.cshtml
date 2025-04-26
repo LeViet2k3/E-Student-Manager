@@ -46,7 +46,47 @@
     </div>
 </div>
 
+<!-- Chatbot đặt ở ngoài container -->
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+<df-messenger
+    intent="WELCOME"
+    chat-title="Hỗ trợ sinh viên"
+    agent-id="0dc2a449-ce25-42cc-94ac-63be5d4e2e19"
+    language-code="vi"
+    chat-icon="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+</df-messenger>
+
+<script>
+    window.addEventListener('dfMessengerLoaded', function () {
+        const dfMessenger = document.querySelector('df-messenger');
+        const shadowRoot = dfMessenger.shadowRoot;
+
+        // Ẩn chatbot khi mới load trang
+        const messengerContainer = shadowRoot.querySelector('df-messenger-chat');
+        messengerContainer.style.display = 'none';
+
+        // Khi người dùng nhấn vào nút chatbot, hiển thị chatbot
+        dfMessenger.addEventListener('click', function() {
+            messengerContainer.style.display = 'block'; // Hiển thị chatbot
+            const messengerChat = messengerContainer.shadowRoot.querySelector('.chat-wrapper');
+            messengerChat.style.width = '300px';  // Kích thước đầy đủ khi nhấn
+            messengerChat.style.height = '370px'; // Kích thước đầy đủ khi nhấn
+        });
+    });
+</script>
+
+
 <style>
+    df-messenger {
+        --df-messenger-button-titlebar-color: #3498db; /* Màu thanh tiêu đề */
+        --df-messenger-chat-background-color: #ffffff; /* Nền chat */
+        --df-messenger-font-color: #333333; /* Màu chữ */
+        --df-messenger-send-icon: #3498db; /* Icon gửi */
+        --df-messenger-bot-message: #eef4fb; /* Màu tin nhắn bot */
+        --df-messenger-user-message: #cce5ff; /* Màu tin nhắn người */
+    }
+    
     .jumbotron {
         background-color: #f8f9fa;
         border-radius: 10px;
@@ -65,13 +105,13 @@
         padding: 20px;
         background-color: #fff;
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        height: 150px; /* Đặt chiều cao cố định cho các thẻ menu */
+        height: 150px;
     }
 
     .menu-icon {
-        font-size: 3rem; /* Tăng kích thước icon */
+        font-size: 3rem;
         margin-bottom: 10px;
-        color: #007bff; /* Màu icon chủ đạo */
+        color: #007bff;
     }
 
     .menu-text {
@@ -90,5 +130,3 @@
         border-radius: 5px;
     }
 </style>
-
-@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> *@

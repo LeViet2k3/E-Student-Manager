@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Thời Khóa Biểu";
     var years = ViewBag.Years as List<string>;
+    var grouped = Model.GroupBy(x => new { x.CourseClasses.Course.NamHoc, x.CourseClasses.Course.KiHoc })
+                       .OrderByDescending(g => g.Key.NamHoc)
+                       .ThenBy(g => g.Key.KiHoc);
 }
 
 <div class="container mt-5">
@@ -40,33 +43,39 @@
             }
             else
             {
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover align-middle text-center">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Tên học phần</th>
-                                <th>Thứ</th>
-                                <th>Tiết</th>
-                                <th>Phòng học</th>
-                                <th>Kỳ học</th>
-                                <th>Năm học</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.CourseClasses.Course.TenHP</td>
-                                <td>@item.CourseClasses.Thu</td>
-                                <td>@item.CourseClasses.Tiet</td>
-                                <td>@item.CourseClasses.PhongHoc</td>
-                                <td>@item.CourseClasses.Course.KiHoc</td>
-                                <td>@item.CourseClasses.Course.NamHoc</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
+                foreach (var group in grouped)
+                {
+                    <h5 class="mt-4 fw-bold">Năm học: @group.Key.NamHoc - Kỳ: @group.Key.KiHoc</h5>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered table-hover align-middle text-center" style="table-layout: fixed; width: 100%;">
+                            <colgroup>
+                                <col style="width: 40%;">
+                                <col style="width: 20%;">
+                                <col style="width: 20%;">
+                                <col style="width: 20%;">
+                            </colgroup>
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Tên học phần</th>
+                                    <th>Thứ</th>
+                                    <th>Tiết</th>
+                                    <th>Phòng học</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in group)
+                                {
+                                    <tr>
+                                        <td style="word-wrap: break-word;">@item.CourseClasses.Course.TenHP</td>
+                                        <td>@item.CourseClasses.Thu</td>
+                                        <td>@item.CourseClasses.Tiet</td>
+                                        <td>@item.CourseClasses.PhongHoc</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
             }
         </div>
     </div>

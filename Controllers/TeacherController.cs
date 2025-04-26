@@ -108,6 +108,33 @@ namespace StudentApp.Controllers
             return View("ViewClassList", studentGrades);
         }
 
+        public async Task<IActionResult> TeachingSchedule(string namHoc, int? hocKy)
+        {
+            // Lấy maGV từ Session
+            var maGV = HttpContext.Session.GetString("UserId");
+
+            if (string.IsNullOrEmpty(maGV))
+            {
+                return RedirectToAction("Login", "Account"); // Nếu không có mã giảng viên trong session, chuyển hướng về trang đăng nhập
+            }
+
+            var schedules = _context.TeachingSchedules
+                .Include(ts => ts.CourseClasses)
+                    .ThenInclude(cc => cc.Course)
+                .Where(ts => ts.MaGV == maGV); // Lọc theo giảng viên
+
+            if (!string.IsNullOrEmpty(namHoc))
+                schedules = schedules.Where(ts => ts.CourseClasses.Course.NamHoc == namHoc);
+
+            if (hocKy.HasValue)
+                schedules = schedules.Where(ts => ts.CourseClasses.Course.KiHoc == hocKy.Value);
+
+            // Lấy danh sách các năm học
+            var yearsList = await _context.Courses.Select(c => c.NamHoc).Distinct().ToListAsync();
+            ViewBag.Years = yearsList ?? new List<string>(); // Đảm bảo không null
+
+            return View(await schedules.ToListAsync());
+        }
 
     }
 }

@@ -15,7 +15,7 @@ namespace StudentApp.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string hocKy, string namHoc)
         {
             string maSV = HttpContext.Session.GetString("UserId");
             if (string.IsNullOrEmpty(maSV))
@@ -24,8 +24,21 @@ namespace StudentApp.Controllers
                 return RedirectToAction("Index", "Student");
             }
 
+            // Lấy danh sách các khóa học
             var courses = _courseService.GetCourses();
-            
+
+            // Lọc khóa học theo kỳ học và năm học nếu có
+            // if (!string.IsNullOrEmpty(hocKy))
+            // {
+            //     courses = courses.Where(c => c.KiHoc == hocKy).ToList();
+            // }
+
+            if (!string.IsNullOrEmpty(namHoc))
+            {
+                courses = courses.Where(c => c.NamHoc == namHoc).ToList();
+            }
+
+            // Lấy danh sách các khóa học đã đăng ký của sinh viên
             var registeredCourseIds = _context.CourseRegistrations
                 .Include(r => r.CourseClasses)
                 .ThenInclude(cc => cc.Course)
@@ -36,12 +49,11 @@ namespace StudentApp.Controllers
 
             ViewBag.RegisteredCourseIds = registeredCourseIds;
             ViewBag.MaSV = maSV;  // Truyền maSV vào View nếu cần
+            ViewBag.HocKy = hocKy; // Truyền kỳ học vào View
+            ViewBag.NamHoc = namHoc; // Truyền năm học vào View
 
             return View(courses);
         }
-
-
-
 
         [HttpPost]
         public IActionResult Register(string maSV, string maHP)

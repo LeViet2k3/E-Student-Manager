@@ -1,0 +1,70 @@
+@model List<StudentApp.Models.TeachingSchedule>
+
+@{
+    ViewData["Title"] = "Lịch Dạy Giảng Viên";
+    var years = ViewBag.Years as List<string> ?? new List<string>(); // Đảm bảo ViewBag.Years không null
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-white text-dark text-center border-bottom rounded-top-4">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Năm học</label>
+                    <select name="namHoc" class="form-select">
+                        <option value="">-- Chọn năm --</option>
+                        @foreach (var year in years)
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Kỳ học</label>
+                    <select name="hocKy" class="form-select">
+                        <option value="">-- Chọn kỳ --</option>
+                        <option value="1">Kỳ 1</option>
+                        <option value="2">Kỳ 2</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill">Xem lịch dạy</button>
+                </div>
+            </form>
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-warning text-center">Không tìm thấy lịch dạy.</div>
+            }
+            else
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tên học phần</th>
+                                <th>Thứ</th>
+                                <th>Tiết</th>
+                                <th>Phòng học</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.CourseClasses?.Course?.TenHP</td>
+                                    <td>@item.CourseClasses?.Thu </td>
+                                    <td>@item.CourseClasses?.Tiet</td>
+                                    <td>@item.CourseClasses?.PhongHoc</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

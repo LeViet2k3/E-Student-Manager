@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using StudentApp.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace StudentApp.Controllers
 {
@@ -74,17 +76,34 @@ namespace StudentApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            // Lấy danh sách năm học từ bảng Course (distinct)
-            var years = _context.Courses
-                        .Select(c => c.NamHoc)
-                        .Distinct()
-                        .OrderByDescending(y => y)
-                        .ToList();
+            // Truy vấn thời khóa biểu của sinh viên đang đăng nhập
+            var query = _context.CourseRegistrations
+                .Include(x => x.CourseClasses)
+                .ThenInclude(cc => cc.Course)
+                .Where(x => x.MaSV == studentCode) // Chỉ lấy của sinh viên hiện tại
+                .AsQueryable();
+
+            if (hocKy.HasValue)
+                query = query.Where(x => x.CourseClasses.Course.KiHoc == hocKy.Value);
+
+            if (!string.IsNullOrEmpty(namHoc))
+                query = query.Where(x => x.CourseClasses.Course.NamHoc == namHoc);
+
+            var list = query.ToList();
+
+            // Lấy danh sách năm học từ dữ liệu của sinh viên hiện tại
+            var years = _context.CourseRegistrations
+                .Include(x => x.CourseClasses)
+                .ThenInclude(cc => cc.Course)
+                .Where(x => x.MaSV == studentCode) // Chỉ lấy năm học mà sinh viên có đăng ký
+                .Select(x => x.CourseClasses.Course.NamHoc)
+                .Distinct()
+                .OrderByDescending(y => y)
+                .ToList();
+
             ViewBag.Years = years;
 
-            var timetable = _studentService.GetThoiKhoaBieuBySemester(studentCode, hocKy, namHoc);
-            return View(timetable);
+            return View(list);
         }
-
     }
 }
