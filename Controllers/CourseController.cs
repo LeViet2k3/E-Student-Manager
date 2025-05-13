@@ -24,29 +24,38 @@ namespace StudentApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            // Lấy năm hiện tại
+            // Xác định năm học và học kỳ hiện tại nếu người dùng chưa chọn
             int currentYear = DateTime.Now.Year;
-            string currentNamHoc = $"{currentYear - 1}-{currentYear}";
+            int currentMonth = DateTime.Now.Month;
 
-            // Nếu người dùng không chọn năm học thì lấy năm học hiện tại
+            // Mặc định học kỳ: tháng 9-12 hoặc 1-2 => Học kỳ 1, còn lại => Học kỳ 2
+            string currentHocKy = (currentMonth >= 9 || currentMonth <= 2) ? "1" : "2";
+            string currentNamHoc = (currentMonth >= 9)
+                ? $"{currentYear}-{currentYear + 1}"
+                : $"{currentYear - 1}-{currentYear}";
+
+            hocKy ??= currentHocKy;
             namHoc ??= currentNamHoc;
 
-            // Lấy danh sách các khóa học
-            var courses = _courseService.GetCourses();
-            
-            // Lọc theo năm học
-            courses = courses.Where(c => c.NamHoc == namHoc).ToList();
+            // Truy vấn học phần theo ngành, học kỳ và năm học
+            var courseList = (from st in _context.Students
+                            join tp in _context.TrainingPrograms on st.Nganh equals tp.Nganh
+                            join c in _context.Courses on tp.MaHP equals c.MaHP
+                            join cl in _context.CourseClasses on c.MaHP equals cl.MaHP
+                            where st.MaSV == maSV
+                                    && c.KiHoc == int.Parse(hocKy)
+                                    && c.NamHoc == namHoc
+                            select new
+                            {
+                                c.MaHP,
+                                c.TenHP,
+                                c.SoTinChi,
+                                cl.PhongHoc,
+                                cl.Thu,
+                                cl.Tiet
+                            }).ToList();
 
-            // Lọc theo kỳ học nếu có
-            if (!string.IsNullOrEmpty(hocKy))
-            {
-                if (int.TryParse(hocKy, out int hocKyInt))
-                {
-                    courses = courses.Where(c => c.KiHoc == hocKyInt).ToList();
-                }
-            }
-
-            // Lấy danh sách các khóa học đã đăng ký của sinh viên
+            // Lấy danh sách học phần đã đăng ký
             var registeredCourseIds = _context.CourseRegistrations
                 .Include(r => r.CourseClasses)
                 .ThenInclude(cc => cc.Course)
@@ -55,16 +64,15 @@ namespace StudentApp.Controllers
                 .Distinct()
                 .ToList();
 
+            // Gửi dữ liệu ra View
             ViewBag.RegisteredCourseIds = registeredCourseIds;
             ViewBag.MaSV = maSV;
             ViewBag.HocKy = hocKy;
             ViewBag.NamHoc = namHoc;
-            
+            ViewBag.Courses = courseList;
 
-            return View(courses);
+            return View();
         }
-
-
 
 
         [HttpPost]

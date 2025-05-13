@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZjssS34dkFHrWcok10VRSzhhJqySAjIuI9TG19mCfd4=",
+  "Hash": "Q6WPCtq+NYqVT9rnBKk5dasP3LUNi/5xroXIGcIkDy8=",
   "Source": "StudentApp",
   "BasePath": "_content/StudentApp",
   "Mode": "Default",
@@ -93,25 +93,6 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\background - Copy.png",
-      "SourceId": "StudentApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\",
-      "BasePath": "_content/StudentApp",
-      "RelativePath": "images/background - Copy.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\background - Copy.png"
-    },
-    {
       "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\background.png",
       "SourceId": "StudentApp",
       "SourceType": "Discovered",
@@ -150,12 +131,12 @@
       "OriginalItemSpec": "wwwroot\\images\\grade_manager.png"
     },
     {
-      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\logo.png",
+      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\logo.webp",
       "SourceId": "StudentApp",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\",
       "BasePath": "_content/StudentApp",
-      "RelativePath": "images/logo.png",
+      "RelativePath": "images/logo.webp",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -166,7 +147,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\logo.png"
+      "OriginalItemSpec": "wwwroot\\images\\logo.webp"
     },
     {
       "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\register.png",
