@@ -1,9 +1,7 @@
     @media print {
-        /* Ẩn nút in */
         .no-print[b-odkurmwo67] {
             display: none !important;
         }
-        /* Gỡ bo góc, shadow, padding thừa của card */
         .card[b-odkurmwo67] {
             box-shadow: none !important;
             border: none !important;
@@ -16,12 +14,10 @@
             border-radius: 0 !important;
         }
 
-        /* Gỡ cuộn ngang */
         .table-responsive[b-odkurmwo67] {
             overflow: visible !important;
         }
 
-        /* Table in full width */
         table[b-odkurmwo67] {
             width: 100% !important;
         }

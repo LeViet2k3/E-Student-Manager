@@ -1,0 +1,62 @@
+@model StudentApp.Models.UploadFileModel
+
+@{
+    ViewData["Title"] = "Tải Tài Liệu";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 border-0 p-5" style="max-width: 600px; margin: auto;">
+        <h2 class="text-center mb-4 text-primary fw-bold">@ViewData["Title"]</h2>
+
+        <form asp-action="Upload" method="post" enctype="multipart/form-data">
+            <!-- Thông báo lỗi tổng -->
+            <div asp-validation-summary="All" class="alert-danger" role="alert"></div>
+
+            <div class="form-group mb-4">
+                <label class="form-label fw-semibold">Chọn file PDF:</label>
+                <input type="file" asp-for="File" class="form-control" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label fw-semibold">Mã học phần (MaHP):</label>
+                <input type="text" asp-for="MaHP" class="form-control bg-light" value="@ViewBag.MaLHP" readonly />
+                <span asp-validation-for="MaHP" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg">📚 Tải Lên và Tạo Câu Hỏi</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<style>
+    .card {
+        animation: fadeSlideIn 0.7s ease;
+    }
+
+    @@keyframes fadeSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @* .btn-success {
+        background-color: #28a745;
+        border: none;
+    } *@
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+</style>

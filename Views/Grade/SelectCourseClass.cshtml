@@ -3,12 +3,35 @@
 @{
     ViewData["Title"] = "Danh sách lớp học phần";
 }
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<div class="custom-header-bar">
+    <div class="left-text">
+        <strong>Hệ:</strong> Đại học Chính quy&nbsp;&nbsp;
+        <strong>NH:</strong> 2024-2025&nbsp;&nbsp;
+        <strong>HK:</strong> 2
+    </div>
+    <div class="right-text">
+        <span><strong>Tài khoản</strong> <a href="#" class="name">@ViewBag.StudentName</a></span>
+        <a href="@Url.Action("Logout", "Login")" title="Đăng xuất">
+            <i class="fa-solid fa-power-off"></i>
+        </a>
+        <a href="@Url.Action("Index", "Teacher")" title="Đăng xuất">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-question"></i>
+        <i class="fa-solid fa-bell"></i>
+    </div>
+</div>
 
 <div class="container mt-5">
     <div class="card shadow-sm rounded-4 border-0">
-        <div class="card-header bg-white text-center border-bottom rounded-top-4">
+        <div class="card-header custom-header text-center text-white border-bottom rounded-top-4">
             <h3 class="mb-0">@ViewData["Title"]</h3>
         </div>
+
         <div class="card-body">
             @if (!Model.Any())
             {
@@ -17,7 +40,7 @@
             else
             {
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover align-middle text-center">
+                    <table class="table table-bordered table-hover align-middle text-center mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th>Tên học phần</th>
@@ -36,7 +59,10 @@
                                     <td>@item.Thu</td>
                                     <td>@item.Tiet</td>
                                     <td>
-                                        <a asp-action="EnterGrade" asp-route-maLHP="@item.MaLHP" class="btn btn-outline-primary btn-sm rounded-pill">Nhập điểm</a>
+                                        <a asp-action="EnterGrade" asp-route-maLHP="@item.MaLHP" 
+                                           class="btn btn-custom-blue btn-sm rounded-pill">
+                                            Nhập điểm
+                                        </a>
                                     </td>
                                 </tr>
                             }
@@ -47,3 +73,88 @@
         </div>
     </div>
 </div>
+
+<style>
+    .custom-header-bar {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-header-bar .left-text {
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .custom-header-bar .right-text span {
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text .name{
+        color: #ebe5c8;
+        text-decoration: underline;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .custom-header-bar .right-text a,
+    .custom-header-bar .right-text i {
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+
+    .custom-header-bar .right-text a:hover,
+    .custom-header-bar .right-text i:hover {
+        color: #004080;
+    }
+
+    .custom-header {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        padding: 12px 0;
+    }
+
+    .btn-custom-blue {
+        color: #3a7ecc;
+        border: 1px solid #3a7ecc;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom-blue:hover {
+        background-color: #3a7ecc;
+        color: white;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f0f8ff; 
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        color: #004080; 
+    }
+
+    .alert-info {
+        background-color: #d1e7ff;
+        color: #004080; 
+    }
+</style>

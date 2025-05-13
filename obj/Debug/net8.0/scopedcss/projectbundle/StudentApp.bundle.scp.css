@@ -1,31 +1,71 @@
 /* _content/StudentApp/Views/Shared/_Layout.cshtml.rz.scp.css */
-/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+.custom-header[b-ak0w5rm0kc] {
+  background: linear-gradient(to right, #004080, #3a7ecc);
+  padding: 10px 150px; /* tăng padding trái phải để nội dung không bị sát mép */
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* tạo bóng nhẹ phía dưới */
+}
+
+.header-content[b-ak0w5rm0kc] {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* khoảng cách giữa logo và văn bản */
+}
+
+.header-logo[b-ak0w5rm0kc] {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* viền trắng mờ cho nổi bật */
+}
+
+.header-text h3[b-ak0w5rm0kc], .header-text h5[b-ak0w5rm0kc] {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.header-text .faculty[b-ak0w5rm0kc] {
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-text .system[b-ak0w5rm0kc] {
+  font-size: 16px;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Các phần khác giữ nguyên hoặc cải thiện nhẹ */
 
 a.navbar-brand[b-ak0w5rm0kc] {
   white-space: normal;
   text-align: center;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 a[b-ak0w5rm0kc] {
   color: #0077cc;
+  text-decoration: none;
 }
-
-header[b-ak0w5rm0kc] {
-  height: 100px;
-  background-size: cover;
-  background-position: center;
+a:hover[b-ak0w5rm0kc] {
+  text-decoration: underline;
 }
-
 
 .btn-primary[b-ak0w5rm0kc] {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+.btn-primary:hover[b-ak0w5rm0kc] {
+  background-color: #155ab6;
+}
 
-.nav-pills .nav-link.active[b-ak0w5rm0kc], .nav-pills .show > .nav-link[b-ak0w5rm0kc] {
+.nav-pills .nav-link.active[b-ak0w5rm0kc],
+.nav-pills .show > .nav-link[b-ak0w5rm0kc] {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
@@ -46,26 +86,11 @@ button.accept-policy[b-ak0w5rm0kc] {
   font-size: 1rem;
   line-height: inherit;
 }
-
-.footer[b-ak0w5rm0kc] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
-}
-@media print {
-  .footer[b-ak0w5rm0kc] {
-      display: none !important;
-  }
-}
 /* _content/StudentApp/Views/Teacher/ViewClassList.cshtml.rz.scp.css */
     @media print {
-        /* Ẩn nút in */
         .no-print[b-odkurmwo67] {
             display: none !important;
         }
-        /* Gỡ bo góc, shadow, padding thừa của card */
         .card[b-odkurmwo67] {
             box-shadow: none !important;
             border: none !important;
@@ -78,12 +103,10 @@ button.accept-policy[b-ak0w5rm0kc] {
             border-radius: 0 !important;
         }
 
-        /* Gỡ cuộn ngang */
         .table-responsive[b-odkurmwo67] {
             overflow: visible !important;
         }
 
-        /* Table in full width */
         table[b-odkurmwo67] {
             width: 100% !important;
         }

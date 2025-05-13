@@ -2,11 +2,32 @@
 @{
     var maLHP = ViewBag.MaLHP as string;
 }
-
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<div class="custom-header-bar">
+    <div class="left-text">
+        <strong>Hệ:</strong> Đại học Chính quy&nbsp;&nbsp;
+        <strong>NH:</strong> 2024-2025&nbsp;&nbsp;
+        <strong>HK:</strong> 2
+    </div>
+    <div class="right-text">
+        <span><strong>Tài khoản</strong> <a href="#" class="name">@ViewBag.StudentName</a></span>
+        <a href="@Url.Action("Logout", "Login")" title="Đăng xuất">
+            <i class="fa-solid fa-power-off"></i>
+        </a>
+        <a href="@Url.Action("Index", "Teacher")" title="Đăng xuất">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-question"></i>
+        <i class="fa-solid fa-bell"></i>
+    </div>
+</div>
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-4">
         <div class="card-header bg-white text-dark text-center rounded-top-4 border-bottom">
-            <h3 class="mb-0">Danh sách sinh viên đăng ký</h3>
+            <h3 class="mb-0" style="color: #004080;">Danh sách sinh viên đăng ký</h3>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -48,3 +69,53 @@
         </div>
     </div>
 </div>
+<style>
+    .custom-header-bar {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-header-bar .left-text {
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .custom-header-bar .right-text span {
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text .name{
+        color: #ebe5c8;
+        text-decoration: underline;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .custom-header-bar .right-text a,
+    .custom-header-bar .right-text i {
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+
+    .custom-header-bar .right-text a:hover,
+    .custom-header-bar .right-text i:hover {
+        color: #004080;
+    }
+</style>

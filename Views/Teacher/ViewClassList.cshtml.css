@@ -1,9 +1,7 @@
     @media print {
-        /* Ẩn nút in */
         .no-print {
             display: none !important;
         }
-        /* Gỡ bo góc, shadow, padding thừa của card */
         .card {
             box-shadow: none !important;
             border: none !important;
@@ -16,12 +14,10 @@
             border-radius: 0 !important;
         }
 
-        /* Gỡ cuộn ngang */
         .table-responsive {
             overflow: visible !important;
         }
 
-        /* Table in full width */
         table {
             width: 100% !important;
         }

@@ -4,10 +4,33 @@
     ViewData["Title"] = "Thông tin sinh viên";
 }
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<div class="custom-header-bar">
+    <div class="left-text">
+        <strong>Hệ:</strong> Đại học Chính quy&nbsp;&nbsp;
+        <strong>NH:</strong> 2024-2025&nbsp;&nbsp;
+        <strong>HK:</strong> 2
+    </div>
+    <div class="right-text">
+        <span><strong>Tài khoản</strong> <a href="#" class="name">@ViewBag.StudentName</a></span>
+        <a href="@Url.Action("Logout", "Login")" title="Đăng xuất">
+            <i class="fa-solid fa-power-off"></i>
+        </a>
+        <a href="@Url.Action("Index", "Student")" title="Đăng xuất">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-question"></i>
+        <i class="fa-solid fa-bell"></i>
+    </div>
+</div>
+
 <div class="container mt-5">
     <div class="profile-card bg-white shadow rounded p-5">
         <div class="profile-header mb-4">
-            <h2 class="text-center fw-bold text-primary mb-3">Thông tin cá nhân</h2>
+            <h2 class="text-center mb-3">Thông tin cá nhân</h2>
             <p class="text-muted text-center">Xem và chỉnh sửa thông tin hồ sơ của bạn.</p>
         </div>
 
@@ -83,75 +106,128 @@
 </div>
 
 <style>
+    .custom-header-bar {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-header-bar .left-text {
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .custom-header-bar .right-text span {
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text .name{
+        color: #ebe5c8;
+        text-decoration: underline;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .custom-header-bar .right-text a,
+    .custom-header-bar .right-text i {
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+
+    .custom-header-bar .right-text a:hover,
+    .custom-header-bar .right-text i:hover {
+        color: #004080;
+    }
+
     .profile-card {
         border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* bóng giống header */
+        padding: 2rem;
     }
 
     .profile-header {
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #dee2e6;
         padding-bottom: 1.5rem;
     }
 
+    h2 {
+        font-size: 1.8rem;
+        color: #004080; /* màu chính như header */
+        font-weight: 700;
+    }
+
     .form-label {
-        color: #495057;
+        color: #004080; /* đồng bộ tông xanh đậm */
         margin-bottom: 0.5rem;
+        font-weight: 600;
     }
 
     .form-control-lg,
     .form-select-lg {
-        padding: 0.8rem 1rem;
+        padding: 0.75rem 1rem;
         font-size: 1rem;
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
     }
 
     .rounded-md {
         border-radius: 0.5rem !important;
     }
 
-    .rounded-pill {
-        border-radius: 50px !important;
-    }
-
-    .btn-primary,
-    .btn-outline-secondary {
-        padding: 1rem 1.5rem; 
-        font-size: 1rem; 
-        line-height: 1.5; 
-        display: inline-flex; 
-        align-items: center;
-        justify-content: center;
-        height: auto;
-    }
-
     .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-        transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        background-color: #004080; /* header color */
+        border-color: #003366;
+        color: white;
+        transition: 0.3s ease-in-out;
     }
 
     .btn-primary:hover {
-        background-color: #0056b3;
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        background-color: #003366;
+        box-shadow: 0 0 10px rgba(0, 64, 128, 0.4);
     }
 
     .btn-outline-secondary {
-        border-radius: 50px;
-        transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        border-color: #ced4da;
+        color: #004080;
+        transition: 0.3s ease-in-out;
     }
 
     .btn-outline-secondary:hover {
-        background-color: #e9ecef;
-        border-color: #ced4da;
-        color: #000;
+        background-color: #f8f9fa;
+        color: #003366;
+        border-color: #b0bec5;
     }
 
     .alert-success {
+        background-color: #e6f4ea;
         border-left: 4px solid #28a745;
+        color: #2e7d32;
+        padding: 1rem;
     }
 
     .text-danger.small {
         font-size: 0.85em;
     }
+
 </style>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

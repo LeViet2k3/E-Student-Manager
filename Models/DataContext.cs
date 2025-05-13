@@ -16,6 +16,7 @@ namespace StudentApp.Models
         public DbSet<StudyPlan> StudyPlans { get; set; }
         public DbSet<TeachingSchedule> TeachingSchedules { get; set; }
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
+        public DbSet<Question> Questions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -15,7 +15,6 @@ namespace StudentApp.Controllers
 
         public async Task<IActionResult> Index(int? hocKy, string namHoc)
         {
-            // Tạm thời hard-code mã sinh viên
             var maSV = HttpContext.Session.GetString("UserId");
 
             var namHocList = await _context.Courses
@@ -25,7 +24,6 @@ namespace StudentApp.Controllers
             .ToListAsync();
 
             ViewBag.NamHocList = namHocList;
-            // Join bảng Grade → CourseClass → Course
             var query = _context.Grades
                 .Include(g => g.CourseClasses)
                     .ThenInclude(cc => cc.Course)

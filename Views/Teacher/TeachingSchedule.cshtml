@@ -2,19 +2,42 @@
 
 @{
     ViewData["Title"] = "Lịch Dạy Giảng Viên";
-    var years = ViewBag.Years as List<string> ?? new List<string>(); // Đảm bảo ViewBag.Years không null
+    var years = ViewBag.Years as List<string> ?? new List<string>(); 
 }
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<div class="custom-header-bar">
+    <div class="left-text">
+        <strong>Hệ:</strong> Đại học Chính quy&nbsp;&nbsp;
+        <strong>NH:</strong> 2024-2025&nbsp;&nbsp;
+        <strong>HK:</strong> 2
+    </div>
+    <div class="right-text">
+        <span><strong>Tài khoản</strong> <a href="#" class="name">@ViewBag.StudentName</a></span>
+        <a href="@Url.Action("Logout", "Login")" title="Đăng xuất">
+            <i class="fa-solid fa-power-off"></i>
+        </a>
+        <a href="@Url.Action("Index", "Teacher")" title="Đăng xuất">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-question"></i>
+        <i class="fa-solid fa-bell"></i>
+    </div>
+</div>
 
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-header bg-white text-dark text-center border-bottom rounded-top-4">
+        <div class="card-header text-white text-center border-bottom rounded-top-4"
+             style="background: linear-gradient(to right, #004080, #3a7ecc);">
             <h3 class="mb-0">@ViewData["Title"]</h3>
         </div>
         <div class="card-body">
             <form method="get" class="row g-3 align-items-end mb-4">
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Năm học</label>
-                    <select name="namHoc" class="form-select">
+                    <select name="namHoc" class="form-select rounded-3 shadow-sm">
                         <option value="">-- Chọn năm --</option>
                         @foreach (var year in years)
                         {
@@ -24,26 +47,30 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Kỳ học</label>
-                    <select name="hocKy" class="form-select">
+                    <select name="hocKy" class="form-select rounded-3 shadow-sm">
                         <option value="">-- Chọn kỳ --</option>
                         <option value="1">Kỳ 1</option>
                         <option value="2">Kỳ 2</option>
                     </select>
                 </div>
                 <div class="col-md-4 d-grid">
-                    <button type="submit" class="btn btn-primary rounded-pill">Xem lịch dạy</button>
+                    <button type="submit" class="btn btn-primary rounded-pill shadow-sm" style="background: linear-gradient(to right, #004080, #3a7ecc);">
+                        Xem lịch dạy
+                    </button>
                 </div>
             </form>
 
             @if (Model == null || !Model.Any())
             {
-                <div class="alert alert-warning text-center">Không tìm thấy lịch dạy.</div>
+                <div class="alert alert-warning text-center rounded-3 shadow-sm">
+                    Không tìm thấy lịch dạy.
+                </div>
             }
             else
             {
                 <div class="table-responsive mb-4">
-                    <table class="table table-bordered table-hover align-middle text-center">
-                        <thead class="table-light">
+                    <table class="table table-bordered table-hover align-middle text-center rounded-3 overflow-hidden">
+                        <thead style="background-color: #e3f0ff; color: #003366;">
                             <tr>
                                 <th>Tên học phần</th>
                                 <th>Thứ</th>
@@ -68,3 +95,53 @@
         </div>
     </div>
 </div>
+<style>
+    .custom-header-bar {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-header-bar .left-text {
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .custom-header-bar .right-text span {
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text .name{
+        color: #ebe5c8;
+        text-decoration: underline;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .custom-header-bar .right-text a,
+    .custom-header-bar .right-text i {
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+
+    .custom-header-bar .right-text a:hover,
+    .custom-header-bar .right-text i:hover {
+        color: #004080;
+    }
+</style>

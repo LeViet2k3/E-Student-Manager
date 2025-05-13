@@ -20,7 +20,6 @@ namespace StudentApp.Controllers
             return View();
         }
 
-        // ✅ Đăng nhập bằng mã + email
         [HttpPost]
         public IActionResult Login(string code, string email, string role)
         {

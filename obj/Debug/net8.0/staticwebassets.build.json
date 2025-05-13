@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lLWPgm3Hn1tNcJ9DMxplT9UFla33Mxk2fM23wVyzVEg=",
+  "Hash": "ZjssS34dkFHrWcok10VRSzhhJqySAjIuI9TG19mCfd4=",
   "Source": "StudentApp",
   "BasePath": "_content/StudentApp",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\grade_manager.png"
+    },
+    {
+      "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\logo.png",
+      "SourceId": "StudentApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\",
+      "BasePath": "_content/StudentApp",
+      "RelativePath": "images/logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo.png"
     },
     {
       "Identity": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\register.png",

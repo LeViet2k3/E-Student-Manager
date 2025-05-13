@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\images\\grade_manager.png"
     },
     {
+      "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
       "Id": "D:\\Tài liệu\\Kì 2 năm 4\\Khóa luận tốt nghiệp\\E-Student-Manager\\wwwroot\\images\\register.png",
       "PackagePath": "staticwebassets\\images\\register.png"
     },

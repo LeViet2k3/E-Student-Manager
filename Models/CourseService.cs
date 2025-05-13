@@ -7,11 +7,11 @@ namespace StudentApp.Models
 {
     public interface ICourseService
     {
-        List<Course> GetCourses(); // Lấy danh sách học phần
-        List<Course> GetStudentCourses(string maSV); // Lấy các học phần đã đăng ký
-        bool IsStudentRegistered(string maSV, string maHP); // Kiểm tra đã đăng ký chưa
-        bool RegisterStudentToCourse(string maSV, string maHP); // Đăng ký học phần
-        bool UnregisterStudentFromCourse(string maSV, string maHP); // Hủy đăng ký
+        List<Course> GetCourses(); 
+        List<Course> GetStudentCourses(string maSV);
+        bool IsStudentRegistered(string maSV, string maHP);
+        bool RegisterStudentToCourse(string maSV, string maHP);
+        bool UnregisterStudentFromCourse(string maSV, string maHP);
     }
 
     public class CourseService : ICourseService

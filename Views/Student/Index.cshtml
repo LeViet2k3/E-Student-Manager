@@ -1,6 +1,28 @@
 ﻿﻿@{
     ViewData["Title"] = "Trang chủ";
 }
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<div class="custom-header-bar">
+    <div class="left-text">
+        <strong>Hệ:</strong> Đại học Chính quy&nbsp;&nbsp;
+        <strong>NH:</strong> 2024-2025&nbsp;&nbsp;
+        <strong>HK:</strong> 2
+    </div>
+    <div class="right-text">
+        <span><strong>Tài khoản</strong> <a href="#" class="name">@ViewBag.StudentName</a></span>
+        <a href="@Url.Action("Logout", "Login")" title="Đăng xuất">
+            <i class="fa-solid fa-power-off"></i>
+        </a>
+        <a href="@Url.Action("Index", "Student")" title="Đăng xuất">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-question"></i>
+        <i class="fa-solid fa-bell"></i>
+    </div>
+</div>
 
 <div class="container mt-5">
     <div class="jumbotron bg-light rounded p-5">
@@ -46,51 +68,73 @@
     </div>
 </div>
 
-<!-- Chatbot đặt ở ngoài container -->
-<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-
-<df-messenger
-    intent="WELCOME"
-    chat-title="Hỗ trợ sinh viên"
-    agent-id="0dc2a449-ce25-42cc-94ac-63be5d4e2e19"
-    language-code="vi"
-    chat-icon="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
-</df-messenger>
-
-<script>
-    window.addEventListener('dfMessengerLoaded', function () {
-        const dfMessenger = document.querySelector('df-messenger');
-        const shadowRoot = dfMessenger.shadowRoot;
-
-        // Ẩn chatbot khi mới load trang
-        const messengerContainer = shadowRoot.querySelector('df-messenger-chat');
-        messengerContainer.style.display = 'none';
-
-        // Khi người dùng nhấn vào nút chatbot, hiển thị chatbot
-        dfMessenger.addEventListener('click', function() {
-            messengerContainer.style.display = 'block'; // Hiển thị chatbot
-            const messengerChat = messengerContainer.shadowRoot.querySelector('.chat-wrapper');
-            messengerChat.style.width = '300px';  // Kích thước đầy đủ khi nhấn
-            messengerChat.style.height = '370px'; // Kích thước đầy đủ khi nhấn
-        });
-    });
-</script>
-
 
 <style>
-    df-messenger {
-        --df-messenger-button-titlebar-color: #3498db; /* Màu thanh tiêu đề */
-        --df-messenger-chat-background-color: #ffffff; /* Nền chat */
-        --df-messenger-font-color: #333333; /* Màu chữ */
-        --df-messenger-send-icon: #3498db; /* Icon gửi */
-        --df-messenger-bot-message: #eef4fb; /* Màu tin nhắn bot */
-        --df-messenger-user-message: #cce5ff; /* Màu tin nhắn người */
+    .custom-header-bar {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    
+
+    .custom-header-bar .left-text {
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .custom-header-bar .right-text span {
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text .name{
+        color: #ebe5c8;
+        text-decoration: underline;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .custom-header-bar .right-text a,
+    .custom-header-bar .right-text i {
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+
+    .custom-header-bar .right-text a:hover,
+    .custom-header-bar .right-text i:hover {
+        color: #004080;
+    }
+
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     .jumbotron {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+    }
+
+    .jumbotron h1 {
+        color: #004080;
+        font-weight: bold;
+        font-size: 2rem;
     }
 
     .menu-card {
@@ -99,34 +143,48 @@
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        color: #333;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        color: #004080;
+        border: 1px solid #004080;
+        border-radius: 10px;
         padding: 20px;
-        background-color: #fff;
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        height: 150px;
+        background-color: #ffffff;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s;
+        height: 170px;
     }
 
-    .menu-icon {
-        font-size: 3rem;
-        margin-bottom: 10px;
-        color: #007bff;
+    .menu-card img {
+        max-width: 60px;
+        margin-bottom: 12px;
     }
 
     .menu-text {
-        font-weight: bold;
+        font-weight: 600;
         text-align: center;
-        margin-bottom: 0;
+        margin: 0;
     }
 
     .menu-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        background-color: #e9ecef;
+        transform: translateY(-5px);
+        box-shadow: 0 6px 18px rgba(0, 64, 128, 0.2);
+        background-color: #e6f0ff;
     }
 
     .btn-danger {
-        border-radius: 5px;
+        border-radius: 6px;
+        background-color: #cc0000;
+        border-color: #cc0000;
+        font-weight: 600;
     }
+
+    .btn-danger:hover {
+        background-color: #990000;
+        border-color: #990000;
+    }
+
+    .lead {
+        font-weight: 400;
+        color: #333;
+    }
+
 </style>
+

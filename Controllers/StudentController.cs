@@ -29,19 +29,17 @@ namespace StudentApp.Controllers
             var student = _studentService.GetStudentByCode(studentCode);
             if (student == null)
                 return NotFound();
-
+            ViewBag.StudentName = student.HoTen;
             return View(student);
         }
 
         public IActionResult Profile()
         {
-            // Lấy mã sinh viên từ session
             string studentCode = HttpContext.Session.GetString("UserId");
 
-            // Kiểm tra nếu mã sinh viên không tồn tại trong session
             if (string.IsNullOrEmpty(studentCode))
             {
-                return RedirectToAction("Login", "Account"); // Nếu không có mã sinh viên, chuyển hướng đến trang đăng nhập
+                return RedirectToAction("Login", "Account"); 
             }
 
             // Lấy thông tin sinh viên từ dịch vụ
@@ -50,7 +48,7 @@ namespace StudentApp.Controllers
             // Kiểm tra nếu không tìm thấy sinh viên
             if (student == null)
             {
-                return NotFound(); // Nếu không tìm thấy sinh viên
+                return NotFound();
             }
 
             // Trả về View Profile với thông tin sinh viên
@@ -61,15 +59,14 @@ namespace StudentApp.Controllers
         [HttpPost]
         public IActionResult UpdateProfile(Student student)
         {
-                _studentService.UpdateStudent(student); // Cập nhật thông tin sinh viên
+                _studentService.UpdateStudent(student); 
                 TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
-                return RedirectToAction("Profile", new { maSV = student.MaSV }); // Quay lại trang Profile sau khi cập nhật thành công
+                return RedirectToAction("Profile", new { maSV = student.MaSV });
         }
 
         [HttpGet]
         public IActionResult Timetable(int? hocKy, string? namHoc)
         {
-            // Lấy mã sinh viên từ session
             var studentCode = HttpContext.Session.GetString("UserId");
             if (string.IsNullOrEmpty(studentCode))
             {
@@ -80,7 +77,7 @@ namespace StudentApp.Controllers
             var query = _context.CourseRegistrations
                 .Include(x => x.CourseClasses)
                 .ThenInclude(cc => cc.Course)
-                .Where(x => x.MaSV == studentCode) // Chỉ lấy của sinh viên hiện tại
+                .Where(x => x.MaSV == studentCode)
                 .AsQueryable();
 
             if (hocKy.HasValue)
@@ -95,7 +92,7 @@ namespace StudentApp.Controllers
             var years = _context.CourseRegistrations
                 .Include(x => x.CourseClasses)
                 .ThenInclude(cc => cc.Course)
-                .Where(x => x.MaSV == studentCode) // Chỉ lấy năm học mà sinh viên có đăng ký
+                .Where(x => x.MaSV == studentCode)
                 .Select(x => x.CourseClasses.Course.NamHoc)
                 .Distinct()
                 .OrderByDescending(y => y)

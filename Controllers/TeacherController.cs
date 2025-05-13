@@ -22,7 +22,6 @@ namespace StudentApp.Controllers
         // Trang chủ của giáo viên
         public async Task<IActionResult> Index()
         {
-            // Lấy mã giáo viên từ session
             var maGV = HttpContext.Session.GetString("UserId");
 
             if (string.IsNullOrEmpty(maGV))
@@ -30,7 +29,6 @@ namespace StudentApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            // Lấy thông tin giáo viên từ DB
             var teacher = await _context.Teachers
                 .FirstOrDefaultAsync(t => t.MaGV == maGV);
 
@@ -39,7 +37,6 @@ namespace StudentApp.Controllers
                 return NotFound("Không tìm thấy thông tin giáo viên.");
             }
 
-            // Nếu cần truyền dữ liệu cho View
             ViewBag.TeacherName = teacher.HoTen;
 
             return View();
@@ -110,18 +107,17 @@ namespace StudentApp.Controllers
 
         public async Task<IActionResult> TeachingSchedule(string namHoc, int? hocKy)
         {
-            // Lấy maGV từ Session
             var maGV = HttpContext.Session.GetString("UserId");
 
             if (string.IsNullOrEmpty(maGV))
             {
-                return RedirectToAction("Login", "Account"); // Nếu không có mã giảng viên trong session, chuyển hướng về trang đăng nhập
+                return RedirectToAction("Login", "Account"); 
             }
 
             var schedules = _context.TeachingSchedules
                 .Include(ts => ts.CourseClasses)
                     .ThenInclude(cc => cc.Course)
-                .Where(ts => ts.MaGV == maGV); // Lọc theo giảng viên
+                .Where(ts => ts.MaGV == maGV);
 
             if (!string.IsNullOrEmpty(namHoc))
                 schedules = schedules.Where(ts => ts.CourseClasses.Course.NamHoc == namHoc);
@@ -131,7 +127,7 @@ namespace StudentApp.Controllers
 
             // Lấy danh sách các năm học
             var yearsList = await _context.Courses.Select(c => c.NamHoc).Distinct().ToListAsync();
-            ViewBag.Years = yearsList ?? new List<string>(); // Đảm bảo không null
+            ViewBag.Years = yearsList ?? new List<string>();
 
             return View(await schedules.ToListAsync());
         }

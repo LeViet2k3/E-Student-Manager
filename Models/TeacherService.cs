@@ -19,13 +19,11 @@ namespace StudentApp.Services
             _dataContext = dataContext;
         }
 
-        // Lấy thông tin giảng viên theo mã
         public Teacher GetTeacherByCode(string maGV)
         {
             return _dataContext.Teachers.FirstOrDefault(t => t.MaGV == maGV);
         }
 
-        // Cập nhật thông tin giảng viên
         public void UpdateTeacher(Teacher teacher)
         {
             var existingTeacher = _dataContext.Teachers.FirstOrDefault(t => t.MaGV == teacher.MaGV);

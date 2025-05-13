@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Kết quả làm bài";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 border-0 p-5 text-center" style="background: linear-gradient(to right, #e0f7fa, #ffffff);">
+        <h2 class="text-success mb-3 fw-bold" style="font-size: 2.5rem;">🎉 Chúc mừng bạn!</h2>
+        <p class="text-muted mb-4" style="font-size: 1.2rem;">Bạn đã hoàn thành bài trắc nghiệm.</p>
+
+        <div class="mb-4">
+            <span class="badge bg-success fs-4 p-3">
+                Số câu đúng: <strong>@ViewBag.CorrectAnswers</strong> / <strong>@ViewBag.TotalQuestions</strong>
+            </span>
+        </div>
+
+        <div class="progress mx-auto" style="height: 25px; width: 50%; margin-bottom: 30px;">
+            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
+                 role="progressbar" 
+                 style="width: @((int)(ViewBag.CorrectAnswers * 100 / ViewBag.TotalQuestions))%" 
+                 aria-valuenow="@ViewBag.CorrectAnswers" 
+                 aria-valuemin="0" 
+                 aria-valuemax="@ViewBag.TotalQuestions">
+                @((int)(ViewBag.CorrectAnswers * 100 / ViewBag.TotalQuestions))%
+            </div>
+        </div>
+
+        <a href="@Url.Action("SelectCourse", "Question")" class="btn btn-primary btn-lg px-5">👉 Làm bài khác</a>
+    </div>
+</div>
+
+<style>
+    .card {
+        animation: fadeIn 1s ease;
+    }
+
+    @@keyframes fadeIn {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+</style>

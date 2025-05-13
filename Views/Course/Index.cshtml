@@ -7,52 +7,66 @@
     var namHoc = ViewBag.NamHoc as string;
 }
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<div class="custom-header-bar">
+    <div class="left-text">
+        <strong>Hệ:</strong> Đại học Chính quy&nbsp;&nbsp;
+        <strong>NH:</strong> 2024-2025&nbsp;&nbsp;
+        <strong>HK:</strong> 2
+    </div>
+    <div class="right-text">
+        <span><strong>Tài khoản</strong> <a href="#" class="name">@ViewBag.StudentName</a></span>
+        <a href="@Url.Action("Logout", "Login")" title="Đăng xuất">
+            <i class="fa-solid fa-power-off"></i>
+        </a>
+        <a href="@Url.Action("Index", "Student")" title="Đăng xuất">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-question"></i>
+        <i class="fa-solid fa-bell"></i>
+    </div>
+</div>
+
 <div class="container mt-4">
     <h2 class="text-center mb-4">@ViewData["Title"]</h2>
-
+    <form method="get" class="row g-3 align-items-end mb-4">
+    <div class="col-md-4">
+        <label class="form-label fw-semibold">Kỳ học</label>
+        <select name="hocKy" class="form-select">
+            <option value="">--Chọn kỳ--</option>
+            <option value="1">Kỳ 1</option>
+            <option value="2">Kỳ 2</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label fw-semibold">Năm học</label>
+        <select name="namHoc" class="form-select">
+            <option value="">--Chọn năm--</option>
+            @if (ViewBag.NamHocList != null)
+            {
+                foreach (var year in ViewBag.NamHocList as List<string>)
+                {
+                    <option value="@year">@year</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-4 d-grid">
+        <button type="submit" class="btn btn-primary rounded-pill">Xem kết quả</button>
+    </div>
+</form>
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger text-center">@TempData["Error"]</div>
     }
 
-    <!-- Form lọc chỉ theo năm học -->
-    <form method="get" class="row g-3 align-items-end mb-4">
-        @* Nếu bạn muốn thêm lại phần lọc kỳ học, mở phần này *@
-        @* <div class="col-md-4">
-            <label class="form-label fw-semibold">Kỳ học</label>
-            <select name="hocKy" class="form-select">
-                <option value="">--Chọn kỳ--</option>
-                <option value="1" @(hocKy == "1" ? "selected" : "")>Kỳ 1</option>
-                <option value="2" @(hocKy == "2" ? "selected" : "")>Kỳ 2</option>
-            </select>
-        </div> *@
-
-        <div class="col-md-6">
-            <label class="form-label fw-semibold">Năm học</label>
-            <select name="namHoc" class="form-select">
-                <option value="">--Chọn năm--</option>
-                @if (ViewBag.NamHocList != null)
-                {
-                    foreach (var year in ViewBag.NamHocList as List<string>)
-                    {
-                        <option value="@year" selected="@(namHoc == year ? "selected" : null)">@year</option>
-                    }
-                }
-            </select>
-        </div>
-        <div class="col-md-3 d-grid">
-            <button type="submit" class="btn btn-primary rounded-pill">Xem kết quả</button>
-        </div>
-    </form>
-
     <!-- Hiển thị danh sách học phần -->
     @foreach (var yearGroup in Model.GroupBy(c => c.NamHoc))
     {
         <div class="card mb-3">
-            <div class="card-header bg-primary text-white">
-                <h4>@yearGroup.Key</h4>
-            </div>
-
             @foreach (var semesterGroup in yearGroup.GroupBy(c => c.KiHoc))
             {
                 <div class="card-body">
@@ -107,3 +121,138 @@
         </div>
     }
 </div>
+
+<style>
+    .custom-header-bar {
+        background: linear-gradient(to right, #004080, #3a7ecc);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-header-bar .left-text {
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .custom-header-bar .right-text span {
+        font-weight: 500;
+    }
+
+    .custom-header-bar .right-text .name{
+        color: #ebe5c8;
+        text-decoration: underline;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .custom-header-bar .right-text a,
+    .custom-header-bar .right-text i {
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+
+    .custom-header-bar .right-text a:hover,
+    .custom-header-bar .right-text i:hover {
+        color: #004080;
+    }
+
+
+    h2 {
+        font-weight: 600;
+        color: #004080;
+    }
+
+    form .form-label {
+        font-weight: 600;
+        color: #004080;
+    }
+
+    form .btn-primary {
+        background-color: #004080;
+        border-color: #004080;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    form .btn-primary:hover {
+        background-color: #003366;
+        border-color: #003366;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: none;
+    }
+
+    .card-header {
+        background-color: #004080 !important;
+        color: white !important;
+        padding: 16px 24px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #004080;
+        margin-bottom: 16px;
+    }
+
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table th {
+        background-color: #f4f8fb;
+        color: #004080;
+        font-weight: 600;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .badge.bg-success {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+
+    .btn-primary.rounded-pill {
+        background-color: #3a7ecc;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-primary.rounded-pill:hover {
+        background-color: #2e6bb2;
+    }
+
+    .alert-danger {
+        background-color: #ffcccc;
+        border-color: #ff9999;
+        color: #990000;
+        font-weight: 500;
+    }
+
+</style>
